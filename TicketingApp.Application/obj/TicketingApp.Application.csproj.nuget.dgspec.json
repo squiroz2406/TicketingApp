@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/home/sof-quiroz/Escritorio/TicketingApp/TicketingApp.Application/TicketingApp.Application.csproj": {}
+    "/home/sof-quiroz/Documentos/TicketingApp/TicketingApp.Application/TicketingApp.Application.csproj": {}
   },
   "projects": {
-    "/home/sof-quiroz/Escritorio/TicketingApp/TicketingApp.Application/TicketingApp.Application.csproj": {
+    "/home/sof-quiroz/Documentos/TicketingApp/TicketingApp.Application/TicketingApp.Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/sof-quiroz/Escritorio/TicketingApp/TicketingApp.Application/TicketingApp.Application.csproj",
+        "projectUniqueName": "/home/sof-quiroz/Documentos/TicketingApp/TicketingApp.Application/TicketingApp.Application.csproj",
         "projectName": "TicketingApp.Application",
-        "projectPath": "/home/sof-quiroz/Escritorio/TicketingApp/TicketingApp.Application/TicketingApp.Application.csproj",
+        "projectPath": "/home/sof-quiroz/Documentos/TicketingApp/TicketingApp.Application/TicketingApp.Application.csproj",
         "packagesPath": "/home/sof-quiroz/.nuget/packages/",
-        "outputPath": "/home/sof-quiroz/Escritorio/TicketingApp/TicketingApp.Application/obj/",
+        "outputPath": "/home/sof-quiroz/Documentos/TicketingApp/TicketingApp.Application/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/sof-quiroz/.nuget/NuGet/NuGet.Config"
