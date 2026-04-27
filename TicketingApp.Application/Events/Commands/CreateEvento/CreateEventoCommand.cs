@@ -1,7 +1,6 @@
+using System;
+using MediatR;
+
 namespace TicketingApp.Application.Events.Commands.CreateEvento;
 
-public class CreateEventoCommand
-{
-    public string Nombre { get; set; } = string.Empty;
-    public DateTime Fecha { get; set; }
-}
+public record CreateEventoCommand(string Nombre, DateTime Fecha) : IRequest<int>;

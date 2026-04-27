@@ -1,8 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "uFfhby46dH8=",
+  "dgSpecHash": "cirQcAyTTaI=",
   "success": true,
-  "projectFilePath": "/home/sof-quiroz/Documentos/TicketingApp/TicketingApp.Application/TicketingApp.Application.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "/media/unaj/e28fd9d9-4a7e-4e4d-9144-718f55c8c453/Proyectos/TicketingApp/TicketingApp.Application/TicketingApp.Application.csproj",
+  "expectedPackageFiles": [
+    "/home/unaj/.nuget/packages/mediatr/12.2.0/mediatr.12.2.0.nupkg.sha512",
+    "/home/unaj/.nuget/packages/mediatr.contracts/2.0.1/mediatr.contracts.2.0.1.nupkg.sha512",
+    "/home/unaj/.nuget/packages/microsoft.extensions.dependencyinjection.abstractions/8.0.0/microsoft.extensions.dependencyinjection.abstractions.8.0.0.nupkg.sha512"
+  ],
   "logs": []
 }

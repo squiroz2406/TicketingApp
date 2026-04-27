@@ -1,0 +1,12 @@
+/media/unaj/e28fd9d9-4a7e-4e4d-9144-718f55c8c453/Proyectos/TicketingApp/TicketingApp.Domain/bin/Debug/net8.0/TicketingApp.Domain.deps.json
+/media/unaj/e28fd9d9-4a7e-4e4d-9144-718f55c8c453/Proyectos/TicketingApp/TicketingApp.Domain/bin/Debug/net8.0/TicketingApp.Domain.dll
+/media/unaj/e28fd9d9-4a7e-4e4d-9144-718f55c8c453/Proyectos/TicketingApp/TicketingApp.Domain/bin/Debug/net8.0/TicketingApp.Domain.pdb
+/media/unaj/e28fd9d9-4a7e-4e4d-9144-718f55c8c453/Proyectos/TicketingApp/TicketingApp.Domain/obj/Debug/net8.0/TicketingApp.Domain.GeneratedMSBuildEditorConfig.editorconfig
+/media/unaj/e28fd9d9-4a7e-4e4d-9144-718f55c8c453/Proyectos/TicketingApp/TicketingApp.Domain/obj/Debug/net8.0/TicketingApp.Domain.AssemblyInfoInputs.cache
+/media/unaj/e28fd9d9-4a7e-4e4d-9144-718f55c8c453/Proyectos/TicketingApp/TicketingApp.Domain/obj/Debug/net8.0/TicketingApp.Domain.AssemblyInfo.cs
+/media/unaj/e28fd9d9-4a7e-4e4d-9144-718f55c8c453/Proyectos/TicketingApp/TicketingApp.Domain/obj/Debug/net8.0/TicketingApp.Domain.csproj.CoreCompileInputs.cache
+/media/unaj/e28fd9d9-4a7e-4e4d-9144-718f55c8c453/Proyectos/TicketingApp/TicketingApp.Domain/obj/Debug/net8.0/TicketingApp.Domain.sourcelink.json
+/media/unaj/e28fd9d9-4a7e-4e4d-9144-718f55c8c453/Proyectos/TicketingApp/TicketingApp.Domain/obj/Debug/net8.0/TicketingApp.Domain.dll
+/media/unaj/e28fd9d9-4a7e-4e4d-9144-718f55c8c453/Proyectos/TicketingApp/TicketingApp.Domain/obj/Debug/net8.0/refint/TicketingApp.Domain.dll
+/media/unaj/e28fd9d9-4a7e-4e4d-9144-718f55c8c453/Proyectos/TicketingApp/TicketingApp.Domain/obj/Debug/net8.0/TicketingApp.Domain.pdb
+/media/unaj/e28fd9d9-4a7e-4e4d-9144-718f55c8c453/Proyectos/TicketingApp/TicketingApp.Domain/obj/Debug/net8.0/ref/TicketingApp.Domain.dll

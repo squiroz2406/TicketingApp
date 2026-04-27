@@ -1,0 +1,16 @@
+/media/unaj/e28fd9d9-4a7e-4e4d-9144-718f55c8c453/Proyectos/TicketingApp/TicketingApp.Application/bin/Debug/net8.0/TicketingApp.Application.deps.json
+/media/unaj/e28fd9d9-4a7e-4e4d-9144-718f55c8c453/Proyectos/TicketingApp/TicketingApp.Application/bin/Debug/net8.0/TicketingApp.Application.dll
+/media/unaj/e28fd9d9-4a7e-4e4d-9144-718f55c8c453/Proyectos/TicketingApp/TicketingApp.Application/bin/Debug/net8.0/TicketingApp.Application.pdb
+/media/unaj/e28fd9d9-4a7e-4e4d-9144-718f55c8c453/Proyectos/TicketingApp/TicketingApp.Application/bin/Debug/net8.0/TicketingApp.Domain.dll
+/media/unaj/e28fd9d9-4a7e-4e4d-9144-718f55c8c453/Proyectos/TicketingApp/TicketingApp.Application/bin/Debug/net8.0/TicketingApp.Domain.pdb
+/media/unaj/e28fd9d9-4a7e-4e4d-9144-718f55c8c453/Proyectos/TicketingApp/TicketingApp.Application/obj/Debug/net8.0/TicketingApp.Application.csproj.AssemblyReference.cache
+/media/unaj/e28fd9d9-4a7e-4e4d-9144-718f55c8c453/Proyectos/TicketingApp/TicketingApp.Application/obj/Debug/net8.0/TicketingApp.Application.GeneratedMSBuildEditorConfig.editorconfig
+/media/unaj/e28fd9d9-4a7e-4e4d-9144-718f55c8c453/Proyectos/TicketingApp/TicketingApp.Application/obj/Debug/net8.0/TicketingApp.Application.AssemblyInfoInputs.cache
+/media/unaj/e28fd9d9-4a7e-4e4d-9144-718f55c8c453/Proyectos/TicketingApp/TicketingApp.Application/obj/Debug/net8.0/TicketingApp.Application.AssemblyInfo.cs
+/media/unaj/e28fd9d9-4a7e-4e4d-9144-718f55c8c453/Proyectos/TicketingApp/TicketingApp.Application/obj/Debug/net8.0/TicketingApp.Application.csproj.CoreCompileInputs.cache
+/media/unaj/e28fd9d9-4a7e-4e4d-9144-718f55c8c453/Proyectos/TicketingApp/TicketingApp.Application/obj/Debug/net8.0/TicketingApp.Application.sourcelink.json
+/media/unaj/e28fd9d9-4a7e-4e4d-9144-718f55c8c453/Proyectos/TicketingApp/TicketingApp.Application/obj/Debug/net8.0/Ticketin.C6688AF4.Up2Date
+/media/unaj/e28fd9d9-4a7e-4e4d-9144-718f55c8c453/Proyectos/TicketingApp/TicketingApp.Application/obj/Debug/net8.0/TicketingApp.Application.dll
+/media/unaj/e28fd9d9-4a7e-4e4d-9144-718f55c8c453/Proyectos/TicketingApp/TicketingApp.Application/obj/Debug/net8.0/refint/TicketingApp.Application.dll
+/media/unaj/e28fd9d9-4a7e-4e4d-9144-718f55c8c453/Proyectos/TicketingApp/TicketingApp.Application/obj/Debug/net8.0/TicketingApp.Application.pdb
+/media/unaj/e28fd9d9-4a7e-4e4d-9144-718f55c8c453/Proyectos/TicketingApp/TicketingApp.Application/obj/Debug/net8.0/ref/TicketingApp.Application.dll

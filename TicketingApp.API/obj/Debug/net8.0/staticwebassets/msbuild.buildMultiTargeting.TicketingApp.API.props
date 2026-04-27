@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="../build/TicketingApp.API.props" />
+</Project>
