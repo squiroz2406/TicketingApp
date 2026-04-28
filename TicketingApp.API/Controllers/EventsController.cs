@@ -4,6 +4,7 @@ using TicketingApp.Application.Events.Commands.CreateEvent;
 using TicketingApp.Application.Events.DTOs;
 using TicketingApp.Application.Events.Queries.ListEvents;
 using TicketingApp.Application.Events.Queries.GetEventById;
+using TicketingApp.Application.Events.Queries.GetSectorsByEventId;
 using TicketingApp.Application.Seats.Queries.GetAvailability;
 
 namespace TicketingApp.API.Controllers;
@@ -30,6 +31,13 @@ public class EventsController : ControllerBase
     public async Task<IActionResult> GetSeats(int id)
     {
         var result = await _mediator.Send(new GetAvailabilityQuery(id));
+        return Ok(result);
+    }
+
+    [HttpGet("{id}/sectors")]
+    public async Task<IActionResult> GetSectors(int id)
+    {
+        var result = await _mediator.Send(new GetSectorsByEventIdQuery { EventId = id });
         return Ok(result);
     }
 

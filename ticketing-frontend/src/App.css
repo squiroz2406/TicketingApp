@@ -1,3 +1,18 @@
+#root {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #ffffff;
+  color: #000000;
+}
+
+.App {
+  width: 100%;
+  background-color: #ffffff;
+  color: #000000;
+  min-height: 100vh;
+}
+
 .counter {
   font-size: 16px;
   padding: 5px 10px;

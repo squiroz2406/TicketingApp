@@ -1,6 +1,34 @@
 @TicketingApp.API_HostAddress = http://localhost:5290
 
-GET {{TicketingApp.API_HostAddress}}/weatherforecast/
+### ============== EVENTS ==============
+
+### List all events
+GET {{TicketingApp.API_HostAddress}}/api/v1/events
 Accept: application/json
+
+###
+
+### Get sectors by event ID
+GET {{TicketingApp.API_HostAddress}}/api/v1/events/1/sectors
+Accept: application/json
+
+###
+
+### Get seat availability by event ID
+GET {{TicketingApp.API_HostAddress}}/api/v1/events/1/seats
+Accept: application/json
+
+###
+
+### ============== RESERVATIONS ==============
+
+### Reserve a seat
+POST {{TicketingApp.API_HostAddress}}/api/v1/reservations
+Content-Type: application/json
+
+{
+  "seatId": "00000000-0000-0000-0000-000000000001",
+  "userId": 1
+}
 
 ###

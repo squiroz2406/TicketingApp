@@ -10,21 +10,57 @@ namespace TicketingApp.Application.Seats.Commands.ReserveSeat;
 public class ReserveSeatCommandHandler : IRequestHandler<ReserveSeatCommand, bool>
 {
     private readonly ISeatRepository _seatRepository;
+    private readonly IReservationRepository _reservationRepository;
+    private readonly IAuditLogRepository _auditLogRepository;
     private readonly IUnitOfWork _unitOfWork;
 
-    public ReserveSeatCommandHandler(ISeatRepository butacaRepository, IUnitOfWork unitOfWork)
+    public ReserveSeatCommandHandler(
+        ISeatRepository seatRepository,
+        IReservationRepository reservationRepository,
+        IAuditLogRepository auditLogRepository,
+        IUnitOfWork unitOfWork)
     {
-        _seatRepository = butacaRepository;
+        _seatRepository = seatRepository;
+        _reservationRepository = reservationRepository;
+        _auditLogRepository = auditLogRepository;
         _unitOfWork = unitOfWork;
     }
 
     public async Task<bool> Handle(ReserveSeatCommand request, CancellationToken cancellationToken)
     {
-        // For simplicity, assume we update the seat status
-        // In real app, create a Reservation entity
-        // But since Reservation exists, perhaps add logic
+        var seat = await _seatRepository.GetByIdAsync(request.SeatId);
+        if (seat == null || seat.Status != "Available")
+        {
+            return false;
+        }
 
-        // Placeholder: just return true
+        // Change seat status
+        seat.Status = "Reserved";
+        await _seatRepository.UpdateAsync(seat);
+
+        // Create reservation
+        var reservation = new Reservation
+        {
+            SeatId = request.SeatId,
+            UserId = request.UserId,
+            Status = "Pending",
+            ExpiresAt = DateTime.UtcNow.AddMinutes(15) // 15 minutes to confirm
+        };
+        await _reservationRepository.AddAsync(reservation);
+
+        // Create audit log
+        var auditLog = new AuditLog
+        {
+            UserId = request.UserId,
+            Action = "Reserve",
+            EntityType = "Seat",
+            EntityId = request.SeatId.ToString(),
+            Details = $"Seat {seat.RowIdentifier}{seat.SeatNumber} reserved for event {seat.Sector.EventId}"
+        };
+        await _auditLogRepository.AddAsync(auditLog);
+
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
+
         return true;
     }
 }

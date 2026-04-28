@@ -42,5 +42,12 @@ namespace TicketingApp.Infrastructure.Repositories
                 _context.Events.Remove(evento);
             }
         }
+
+        public async Task<List<Sector>> GetSectorsByEventIdAsync(int eventId)
+        {
+            return await _context.Sectors
+                .Where(s => s.EventId == eventId)
+                .ToListAsync();
+        }
     }
 }

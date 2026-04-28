@@ -1,0 +1,261 @@
+.events-container {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  padding: 30px 20px;
+}
+
+/* Header del Cine */
+.cinema-header {
+  text-align: center;
+  color: white;
+  margin-bottom: 50px;
+  animation: fadeInDown 0.6s ease;
+}
+
+.cinema-header h1 {
+  font-size: 48px;
+  margin: 0;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+.cinema-header p {
+  font-size: 18px;
+  margin: 10px 0 0 0;
+  opacity: 0.9;
+}
+
+/* Filtros */
+.filters-section {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: 2px solid white;
+  padding: 10px 20px;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.filter-btn:hover {
+  background-color: white;
+  color: #667eea;
+}
+
+.filter-btn.active {
+  background-color: white;
+  color: #667eea;
+}
+
+/* Grid de películas */
+.events-grid {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 30px;
+}
+
+.no-events {
+  grid-column: 1 / -1;
+  text-align: center;
+  color: white;
+  font-size: 18px;
+  padding: 40px;
+}
+
+/* Tarjeta de película */
+.event-card {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.event-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* Poster */
+.movie-poster {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+.poster-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.3s ease;
+}
+
+.event-card:hover .poster-image {
+  transform: scale(1.05);
+}
+
+.poster-placeholder {
+  font-size: 80px;
+  opacity: 0.8;
+}
+
+/* Información de la película */
+.movie-info {
+  padding: 20px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.event-card h3 {
+  font-size: 18px;
+  margin: 0 0 12px 0;
+  color: #333;
+  font-weight: bold;
+}
+
+.movie-details {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.rating {
+  background-color: #f5576c;
+  color: white;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.genre {
+  background-color: #667eea;
+  color: white;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.date-time {
+  margin: 8px 0;
+  color: #666;
+  font-size: 14px;
+}
+
+.showtimes {
+  margin: 8px 0;
+  color: #888;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+/* Disponibilidad */
+.availability {
+  margin: 15px 0;
+  flex-grow: 1;
+}
+
+.seats-available {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.available-count {
+  font-size: 13px;
+  color: #666;
+  font-weight: 600;
+}
+
+.availability-bar {
+  height: 6px;
+  background-color: #e0e0e0;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.availability-bar .filled {
+  height: 100%;
+  background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+  transition: width 0.3s ease;
+}
+
+/* Botón de compra */
+.buy-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+  margin-top: auto;
+}
+
+.buy-btn:hover {
+  transform: scale(1.02);
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+.buy-btn:active {
+  transform: scale(0.98);
+}
+
+/* Animación */
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .cinema-header h1 {
+    font-size: 32px;
+  }
+
+  .events-grid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+  }
+
+  .filters-section {
+    gap: 8px;
+  }
+
+  .filter-btn {
+    padding: 8px 16px;
+    font-size: 12px;
+  }
+}

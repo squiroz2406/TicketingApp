@@ -9,4 +9,5 @@ public interface IEventRepository
     Task AddAsync(Event entity);
     Task UpdateAsync(Event entity);
     Task DeleteAsync(int id);
+    Task<List<Sector>> GetSectorsByEventIdAsync(int eventId);
 }
