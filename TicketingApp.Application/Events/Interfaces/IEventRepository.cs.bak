@@ -1,0 +1,11 @@
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
+namespace TicketingApp.Application.Events.Interfaces;
+
+public interface IEventoRepository
+{
+    Task AddAsync(Domain.Entities.Event evento);
+    Task<List<Domain.Entities.Event>> GetAllAsync();
+    Task<Domain.Entities.Event?> GetByIdAsync(int id);
+}

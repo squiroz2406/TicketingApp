@@ -1,6 +1,6 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using TicketingApp.Application.Butacas.Commands.ReservarButaca;
+using TicketingApp.Application.Seats.Commands.ReserveSeat;
 
 namespace TicketingApp.API.Controllers;
 
@@ -16,7 +16,7 @@ public class ReservationsController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> Reserve([FromBody] ReservarButacaCommand command)
+    public async Task<IActionResult> Reserve([FromBody] ReserveSeatCommand command)
     {
         var result = await _mediator.Send(command);
         if (result)
@@ -25,7 +25,7 @@ public class ReservationsController : ControllerBase
         }
         else
         {
-            return Conflict("Butaca ocupada");
+            return Conflict("Seat ocupada");
         }
     }
 }

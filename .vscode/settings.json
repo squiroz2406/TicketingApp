@@ -1,0 +1,12 @@
+{
+    "chat.tools.terminal.autoApprove": {
+        "/^echo 'export PATH=\"\\$HOME/\\.dotnet:\\$PATH\"' >> ~/\\.bashrc && source ~/\\.bashrc$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "/^cd /home/sof-quiroz/Escritorio/1°\\\\ Cuatri\\\\ 2026/Proyecto\\\\ Software/TicketingApp && mv TicketingApp\\.Domain/Entities/Evento\\.cs TicketingApp\\.Domain/Entities/Event\\.cs$/": {
+            "approve": true,
+            "matchCommandLine": true
+        }
+    }
+}

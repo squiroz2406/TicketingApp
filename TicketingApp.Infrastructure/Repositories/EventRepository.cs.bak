@@ -1,0 +1,31 @@
+using Microsoft.EntityFrameworkCore;
+using TicketingApp.Application.Events.Interfaces;
+using TicketingApp.Domain.Entities;
+using TicketingApp.Infrastructure.Persistence;
+
+namespace TicketingApp.Infrastructure.Repositories;
+
+public class EventoRepository : IEventoRepository
+{
+    private readonly ApplicationDbContext _context;
+
+    public EventoRepository(ApplicationDbContext context)
+    {
+        _context = context;
+    }
+
+    public async Task AddAsync(Event evento)
+    {
+        await _context.Events.AddAsync(evento);
+    }
+
+    public async Task<List<Event>> GetAllAsync()
+    {
+        return await _context.Events.ToListAsync();
+    }
+
+    public async Task<Event?> GetByIdAsync(int id)
+    {
+        return await _context.Events.FindAsync(id);
+    }
+}

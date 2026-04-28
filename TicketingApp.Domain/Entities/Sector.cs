@@ -3,10 +3,12 @@ namespace TicketingApp.Domain.Entities;
 public class Sector
 {
     public int Id { get; set; }
-    public string Nombre { get; set; } = string.Empty;
+    public int EventId { get; set; }
+    public Event Event { get; set; } = null!;
 
-    public int EventoId { get; set; }
-    public Evento Evento { get; set; } = null!;
+    public string Name { get; set; } = string.Empty;
+    public decimal Price { get; set; }
+    public int Capacity { get; set; }
 
-    public List<Butaca> Butacas { get; set; } = new();
+    public List<Seat> Seats { get; set; } = new();
 }

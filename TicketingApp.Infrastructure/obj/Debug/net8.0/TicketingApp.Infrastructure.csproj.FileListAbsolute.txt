@@ -1,18 +1,18 @@
-/media/unaj/e28fd9d9-4a7e-4e4d-9144-718f55c8c453/Proyectos/TicketingApp/TicketingApp.Infrastructure/bin/Debug/net8.0/TicketingApp.Infrastructure.deps.json
-/media/unaj/e28fd9d9-4a7e-4e4d-9144-718f55c8c453/Proyectos/TicketingApp/TicketingApp.Infrastructure/bin/Debug/net8.0/TicketingApp.Infrastructure.dll
-/media/unaj/e28fd9d9-4a7e-4e4d-9144-718f55c8c453/Proyectos/TicketingApp/TicketingApp.Infrastructure/bin/Debug/net8.0/TicketingApp.Infrastructure.pdb
-/media/unaj/e28fd9d9-4a7e-4e4d-9144-718f55c8c453/Proyectos/TicketingApp/TicketingApp.Infrastructure/bin/Debug/net8.0/TicketingApp.Application.dll
-/media/unaj/e28fd9d9-4a7e-4e4d-9144-718f55c8c453/Proyectos/TicketingApp/TicketingApp.Infrastructure/bin/Debug/net8.0/TicketingApp.Domain.dll
-/media/unaj/e28fd9d9-4a7e-4e4d-9144-718f55c8c453/Proyectos/TicketingApp/TicketingApp.Infrastructure/bin/Debug/net8.0/TicketingApp.Domain.pdb
-/media/unaj/e28fd9d9-4a7e-4e4d-9144-718f55c8c453/Proyectos/TicketingApp/TicketingApp.Infrastructure/bin/Debug/net8.0/TicketingApp.Application.pdb
-/media/unaj/e28fd9d9-4a7e-4e4d-9144-718f55c8c453/Proyectos/TicketingApp/TicketingApp.Infrastructure/obj/Debug/net8.0/TicketingApp.Infrastructure.csproj.AssemblyReference.cache
-/media/unaj/e28fd9d9-4a7e-4e4d-9144-718f55c8c453/Proyectos/TicketingApp/TicketingApp.Infrastructure/obj/Debug/net8.0/TicketingApp.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
-/media/unaj/e28fd9d9-4a7e-4e4d-9144-718f55c8c453/Proyectos/TicketingApp/TicketingApp.Infrastructure/obj/Debug/net8.0/TicketingApp.Infrastructure.AssemblyInfoInputs.cache
-/media/unaj/e28fd9d9-4a7e-4e4d-9144-718f55c8c453/Proyectos/TicketingApp/TicketingApp.Infrastructure/obj/Debug/net8.0/TicketingApp.Infrastructure.AssemblyInfo.cs
-/media/unaj/e28fd9d9-4a7e-4e4d-9144-718f55c8c453/Proyectos/TicketingApp/TicketingApp.Infrastructure/obj/Debug/net8.0/TicketingApp.Infrastructure.csproj.CoreCompileInputs.cache
-/media/unaj/e28fd9d9-4a7e-4e4d-9144-718f55c8c453/Proyectos/TicketingApp/TicketingApp.Infrastructure/obj/Debug/net8.0/TicketingApp.Infrastructure.sourcelink.json
-/media/unaj/e28fd9d9-4a7e-4e4d-9144-718f55c8c453/Proyectos/TicketingApp/TicketingApp.Infrastructure/obj/Debug/net8.0/Ticketin.1835D903.Up2Date
-/media/unaj/e28fd9d9-4a7e-4e4d-9144-718f55c8c453/Proyectos/TicketingApp/TicketingApp.Infrastructure/obj/Debug/net8.0/TicketingApp.Infrastructure.dll
-/media/unaj/e28fd9d9-4a7e-4e4d-9144-718f55c8c453/Proyectos/TicketingApp/TicketingApp.Infrastructure/obj/Debug/net8.0/refint/TicketingApp.Infrastructure.dll
-/media/unaj/e28fd9d9-4a7e-4e4d-9144-718f55c8c453/Proyectos/TicketingApp/TicketingApp.Infrastructure/obj/Debug/net8.0/TicketingApp.Infrastructure.pdb
-/media/unaj/e28fd9d9-4a7e-4e4d-9144-718f55c8c453/Proyectos/TicketingApp/TicketingApp.Infrastructure/obj/Debug/net8.0/ref/TicketingApp.Infrastructure.dll
+/home/sof-quiroz/Escritorio/1° Cuatri 2026/Proyecto Software/TicketingApp/TicketingApp.Infrastructure/bin/Debug/net8.0/TicketingApp.Infrastructure.deps.json
+/home/sof-quiroz/Escritorio/1° Cuatri 2026/Proyecto Software/TicketingApp/TicketingApp.Infrastructure/bin/Debug/net8.0/TicketingApp.Infrastructure.dll
+/home/sof-quiroz/Escritorio/1° Cuatri 2026/Proyecto Software/TicketingApp/TicketingApp.Infrastructure/bin/Debug/net8.0/TicketingApp.Infrastructure.pdb
+/home/sof-quiroz/Escritorio/1° Cuatri 2026/Proyecto Software/TicketingApp/TicketingApp.Infrastructure/bin/Debug/net8.0/TicketingApp.Application.dll
+/home/sof-quiroz/Escritorio/1° Cuatri 2026/Proyecto Software/TicketingApp/TicketingApp.Infrastructure/bin/Debug/net8.0/TicketingApp.Domain.dll
+/home/sof-quiroz/Escritorio/1° Cuatri 2026/Proyecto Software/TicketingApp/TicketingApp.Infrastructure/bin/Debug/net8.0/TicketingApp.Domain.pdb
+/home/sof-quiroz/Escritorio/1° Cuatri 2026/Proyecto Software/TicketingApp/TicketingApp.Infrastructure/bin/Debug/net8.0/TicketingApp.Application.pdb
+/home/sof-quiroz/Escritorio/1° Cuatri 2026/Proyecto Software/TicketingApp/TicketingApp.Infrastructure/obj/Debug/net8.0/TicketingApp.Infrastructure.csproj.AssemblyReference.cache
+/home/sof-quiroz/Escritorio/1° Cuatri 2026/Proyecto Software/TicketingApp/TicketingApp.Infrastructure/obj/Debug/net8.0/TicketingApp.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+/home/sof-quiroz/Escritorio/1° Cuatri 2026/Proyecto Software/TicketingApp/TicketingApp.Infrastructure/obj/Debug/net8.0/TicketingApp.Infrastructure.AssemblyInfoInputs.cache
+/home/sof-quiroz/Escritorio/1° Cuatri 2026/Proyecto Software/TicketingApp/TicketingApp.Infrastructure/obj/Debug/net8.0/TicketingApp.Infrastructure.AssemblyInfo.cs
+/home/sof-quiroz/Escritorio/1° Cuatri 2026/Proyecto Software/TicketingApp/TicketingApp.Infrastructure/obj/Debug/net8.0/TicketingApp.Infrastructure.csproj.CoreCompileInputs.cache
+/home/sof-quiroz/Escritorio/1° Cuatri 2026/Proyecto Software/TicketingApp/TicketingApp.Infrastructure/obj/Debug/net8.0/TicketingApp.Infrastructure.sourcelink.json
+/home/sof-quiroz/Escritorio/1° Cuatri 2026/Proyecto Software/TicketingApp/TicketingApp.Infrastructure/obj/Debug/net8.0/Ticketin.1835D903.Up2Date
+/home/sof-quiroz/Escritorio/1° Cuatri 2026/Proyecto Software/TicketingApp/TicketingApp.Infrastructure/obj/Debug/net8.0/TicketingApp.Infrastructure.dll
+/home/sof-quiroz/Escritorio/1° Cuatri 2026/Proyecto Software/TicketingApp/TicketingApp.Infrastructure/obj/Debug/net8.0/refint/TicketingApp.Infrastructure.dll
+/home/sof-quiroz/Escritorio/1° Cuatri 2026/Proyecto Software/TicketingApp/TicketingApp.Infrastructure/obj/Debug/net8.0/TicketingApp.Infrastructure.pdb
+/home/sof-quiroz/Escritorio/1° Cuatri 2026/Proyecto Software/TicketingApp/TicketingApp.Infrastructure/obj/Debug/net8.0/ref/TicketingApp.Infrastructure.dll

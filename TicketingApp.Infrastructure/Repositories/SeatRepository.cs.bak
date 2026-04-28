@@ -1,0 +1,24 @@
+using Microsoft.EntityFrameworkCore;
+using TicketingApp.Application.Seats.Interfaces;
+using TicketingApp.Domain.Entities;
+using TicketingApp.Infrastructure.Persistence;
+
+namespace TicketingApp.Infrastructure.Repositories;
+
+public class ButacaRepository : IButacaRepository
+{
+    private readonly ApplicationDbContext _context;
+
+    public ButacaRepository(ApplicationDbContext context)
+    {
+        _context = context;
+    }
+
+    public async Task<List<Seat>> GetByEventoIdAsync(int eventId)
+    {
+        return await _context.Seats
+            .Where(b => b.Sector.EventoId == eventId)
+            .Include(b => b.Sector)
+            .ToListAsync();
+    }
+}

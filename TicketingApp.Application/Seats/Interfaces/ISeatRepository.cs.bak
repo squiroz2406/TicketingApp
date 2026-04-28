@@ -1,0 +1,8 @@
+using TicketingApp.Domain.Entities;
+
+namespace TicketingApp.Application.Seats.Interfaces;
+
+public interface IButacaRepository
+{
+    Task<List<Seat>> GetByEventoIdAsync(int eventId);
+}

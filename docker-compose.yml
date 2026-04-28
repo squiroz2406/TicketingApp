@@ -1,0 +1,27 @@
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      ACCEPT_EULA: Y
+      SA_PASSWORD: YourStrong!Pass123
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+
+  ticketingapp:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:8080
+      - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=TicketingDb;User Id=sa;Password=YourStrong!Pass123;
+    depends_on:
+      - sqlserver
+    volumes:
+      - dataprotection_keys:/root/.aspnet/DataProtection-Keys
+
+volumes:
+  sqlserver_data:
+  dataprotection_keys:

@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/media/unaj/e28fd9d9-4a7e-4e4d-9144-718f55c8c453/Proyectos/TicketingApp/TicketingApp.Domain/TicketingApp.Domain.csproj": {}
+    "/home/sof-quiroz/Escritorio/1° Cuatri 2026/Proyecto Software/TicketingApp/TicketingApp.Domain/TicketingApp.Domain.csproj": {}
   },
   "projects": {
-    "/media/unaj/e28fd9d9-4a7e-4e4d-9144-718f55c8c453/Proyectos/TicketingApp/TicketingApp.Domain/TicketingApp.Domain.csproj": {
+    "/home/sof-quiroz/Escritorio/1° Cuatri 2026/Proyecto Software/TicketingApp/TicketingApp.Domain/TicketingApp.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/media/unaj/e28fd9d9-4a7e-4e4d-9144-718f55c8c453/Proyectos/TicketingApp/TicketingApp.Domain/TicketingApp.Domain.csproj",
+        "projectUniqueName": "/home/sof-quiroz/Escritorio/1° Cuatri 2026/Proyecto Software/TicketingApp/TicketingApp.Domain/TicketingApp.Domain.csproj",
         "projectName": "TicketingApp.Domain",
-        "projectPath": "/media/unaj/e28fd9d9-4a7e-4e4d-9144-718f55c8c453/Proyectos/TicketingApp/TicketingApp.Domain/TicketingApp.Domain.csproj",
-        "packagesPath": "/home/unaj/.nuget/packages/",
-        "outputPath": "/media/unaj/e28fd9d9-4a7e-4e4d-9144-718f55c8c453/Proyectos/TicketingApp/TicketingApp.Domain/obj/",
+        "projectPath": "/home/sof-quiroz/Escritorio/1° Cuatri 2026/Proyecto Software/TicketingApp/TicketingApp.Domain/TicketingApp.Domain.csproj",
+        "packagesPath": "/home/sof-quiroz/.nuget/packages/",
+        "outputPath": "/home/sof-quiroz/Escritorio/1° Cuatri 2026/Proyecto Software/TicketingApp/TicketingApp.Domain/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/unaj/.nuget/NuGet/NuGet.Config"
+          "/home/sof-quiroz/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -58,7 +58,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/home/unaj/.dotnet/sdk/8.0.420/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/home/sof-quiroz/.dotnet/sdk/8.0.420/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

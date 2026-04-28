@@ -9,15 +9,15 @@ using TicketingApp.Infrastructure;
 using TicketingApp.Infrastructure.Repositories;
 using TicketingApp.Application.Events.Interfaces;
 using TicketingApp.Application.Common.Interfaces;
-using TicketingApp.Application.Butacas.Interfaces;
-using TicketingApp.Application.Events.Queries.ListarEventos;
+using TicketingApp.Application.Seats.Interfaces;
+using TicketingApp.Application.Events.Queries.ListEvents;
 using TicketingApp.Infrastructure.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // DB
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"))
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
 );
 
 // Identity
@@ -40,21 +40,21 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     });
 
 // Repositorios
-builder.Services.AddScoped<IEventoRepository, EventoRepository>();
-builder.Services.AddScoped<IButacaRepository, ButacaRepository>();
+builder.Services.AddScoped<IEventRepository, EventRepository>();
+builder.Services.AddScoped<ISeatRepository, SeatRepository>();
 
 // UnitOfWork
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 // Handlers (auto scan)
 builder.Services.Scan(scan => scan
-    .FromAssemblyOf<TicketingApp.Application.Events.Queries.ListarEventos.ListarEventosQueryHandler>()
+    .FromAssemblyOf<TicketingApp.Application.Events.Queries.ListEvents.ListEventsQueryHandler>()
     .AddClasses(c => c.Where(t => t.Name.EndsWith("Handler")))
     .AsImplementedInterfaces()
     .WithScopedLifetime());
 
 // MediatR
-builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(TicketingApp.Application.Events.DTOs.EventoDto).Assembly));
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(TicketingApp.Application.Events.DTOs.EventDto).Assembly));
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -64,6 +64,8 @@ var app = builder.Build();
 
 app.UseSwagger();
 app.UseSwaggerUI();
+
+app.UseStaticFiles();
 
 app.UseAuthentication();
 app.UseAuthorization();
