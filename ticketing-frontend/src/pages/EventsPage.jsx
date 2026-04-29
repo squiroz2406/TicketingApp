@@ -3,45 +3,57 @@ import api from "../api/client";
 import { useNavigate } from "react-router-dom";
 import "./EventsPage.css";
 
-// Datos de prueba - Se muestran si el API no responde
+const POSTER_MAP = {
+  "Dune: Parte Dos": "https://image.tmdb.org/t/p/w342/8b8R8l88Qje9dn9OE8PY05Nxl1X.jpg",
+  "Oppenheimer": "https://xl.movieposterdb.com/23_07/2023/15398776/xl_oppenheimer-movie-poster_3a0195ae.jpg?v=2024-11-02%2011:42:33",
+  "Killers of the Flower Moon": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQsL84KStwCnaLjZEVGF7-WcC0cyMFp44Y45w&s",
+  "Barbie": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgKueimb5cxvI_C6Qg0XcjUzeuxopacmEmVA&s",
+  "Godzilla x Kong": "https://image.tmdb.org/t/p/w342/z1p34vh7dEOnLDmyCrlUVLuoDzd.jpg",
+  "Avatar 3": "https://image.tmdb.org/t/p/w342/t6HIqrRAclMCA60NsSmeqe9RmNV.jpg",
+  "The Flash": "https://image.tmdb.org/t/p/w342/4noF7ZJYRLkKw2RJR3fsFmvTCbD.jpg",
+  "Spider-Man: Beyond the Spider-Verse": "https://image.tmdb.org/t/p/w342/qNLhc3Y6INrVfV7Nn7BSXU5vtti.jpg"
+};
+
 const MOCK_EVENTS = [
   {
     id: 1,
     nombre: "Dune: Parte Dos",
     fecha: new Date(2026, 4, 15, 20, 30),
-    poster: "https://image.tmdb.org/t/p/w342/8b8R8l88Qje9dn9OE8PY05Nxl1X.jpg"
+    poster: POSTER_MAP["Dune: Parte Dos"]
   },
   {
     id: 2,
     nombre: "Oppenheimer",
     fecha: new Date(2026, 4, 16, 19, 0),
-    poster: "https://xl.movieposterdb.com/23_07/2023/15398776/xl_oppenheimer-movie-poster_3a0195ae.jpg?v=2024-11-02%2011:42:33"
+    poster: POSTER_MAP["Oppenheimer"]
   },
   {
     id: 3,
     nombre: "Killers of the Flower Moon",
     fecha: new Date(2026, 4, 17, 21, 0),
-    poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQsL84KStwCnaLjZEVGF7-WcC0cyMFp44Y45w&s"
+    poster: POSTER_MAP["Killers of the Flower Moon"]
   },
   {
     id: 4,
     nombre: "Barbie",
     fecha: new Date(2026, 4, 18, 18, 30),
-    poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgKueimb5cxvI_C6Qg0XcjUzeuxopacmEmVA&s"
+    poster: POSTER_MAP["Barbie"]
   },
   {
     id: 5,
     nombre: "Godzilla x Kong",
     fecha: new Date(2026, 4, 19, 20, 0),
-    poster: "https://image.tmdb.org/t/p/w342/z1p34vh7dEOnLDmyCrlUVLuoDzd.jpg"
+    poster: POSTER_MAP["Godzilla x Kong"]
   },
   {
     id: 6,
     nombre: "Avatar 3",
     fecha: new Date(2026, 4, 20, 22, 0),
-    poster: "https://image.tmdb.org/t/p/w342/t6HIqrRAclMCA60NsSmeqe9RmNV.jpg"
+    poster: POSTER_MAP["Avatar 3"]
   }
 ];
+
+const getPoster = (name) => POSTER_MAP[name] || "";
 
 export default function EventsPage() {
   const [events, setEvents] = useState([]);
@@ -52,14 +64,18 @@ export default function EventsPage() {
     api.get("/events")
       .then(res => {
         if (res.data && res.data.length > 0) {
-          setEvents(res.data);
+          setEvents(res.data.map(event => ({
+            id: event.id,
+            nombre: event.name,
+            fecha: event.eventDate,
+            poster: getPoster(event.name),
+            venue: event.venue
+          })));
         } else {
-          // Si el API no retorna datos, usa datos de prueba
           setEvents(MOCK_EVENTS);
         }
       })
       .catch(err => {
-        // Si hay error en el API, usa datos de prueba
         console.warn("No se pudo conectar al API, usando datos de prueba", err);
         setEvents(MOCK_EVENTS);
       })
@@ -90,7 +106,7 @@ export default function EventsPage() {
           <p className="no-events">No hay películas disponibles</p>
         ) : (
           events.map(e => (
-            <div key={e.id} className="event-card" onClick={() => navigate(`/events/${e.id}/seats`)}>
+            <div key={e.id} className="event-card" onClick={() => navigate(`/events/${e.id}/sectors`)}>
               {/* Poster */}
               <div className="movie-poster">
                 {e.poster ? (
@@ -118,7 +134,7 @@ export default function EventsPage() {
                 </p>
 
                 <p className="showtimes">
-                  ⏰ 14:30 • 17:00 • 20:30 • 23:00
+                  ⏰ 14:30 • 20:30
                 </p>
 
                 <div className="availability">

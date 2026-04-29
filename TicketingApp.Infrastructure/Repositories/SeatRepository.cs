@@ -27,6 +27,14 @@ namespace TicketingApp.Infrastructure.Repositories
                 .ToListAsync();
         }
 
+        public async Task<List<Seat>> GetBySectorIdAsync(int sectorId)
+        {
+            return await _context.Seats
+                .Where(s => s.SectorId == sectorId)
+                .Include(s => s.Sector)
+                .ToListAsync();
+        }
+
         public async Task<List<Seat>> GetAllAsync()
         {
             return await _context.Seats.Include(s => s.Sector).ToListAsync();

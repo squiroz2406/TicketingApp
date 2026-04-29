@@ -24,5 +24,5 @@ FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
 WORKDIR /app
 COPY --from=api-build /app/publish .
 COPY --from=frontend-build /app/frontend/dist ./wwwroot
-EXPOSE 80
+EXPOSE 8080
 ENTRYPOINT ["dotnet", "TicketingApp.API.dll"]

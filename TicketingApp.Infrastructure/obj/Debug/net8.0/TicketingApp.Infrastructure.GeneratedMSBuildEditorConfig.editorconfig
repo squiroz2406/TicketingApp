@@ -8,6 +8,6 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = TicketingApp.Infrastructure
-build_property.ProjectDir = /media/unaj/e28fd9d9-4a7e-4e4d-9144-718f55c8c453/Proyectos/TicketingApp/TicketingApp.Infrastructure/
+build_property.ProjectDir = /home/sof-quiroz/Escritorio/1er Cuatri 2026/Proyecto Software/TicketingApp/TicketingApp.Infrastructure/
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 

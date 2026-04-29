@@ -6,6 +6,7 @@ public interface ISeatRepository
 {
     Task<Seat?> GetByIdAsync(Guid id);
     Task<List<Seat>> GetByEventIdAsync(int eventId);
+    Task<List<Seat>> GetBySectorIdAsync(int sectorId);
     Task<List<Seat>> GetAllAsync();
     Task AddAsync(Seat entity);
     Task UpdateAsync(Seat entity);

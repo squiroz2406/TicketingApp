@@ -6,7 +6,7 @@ Una aplicación de ticketing para eventos, construida con .NET 8 (backend) y Rea
 
 - **Backend**: ASP.NET Core 8, Entity Framework Core, SQL Server, MediatR, JWT Authentication
 - **Frontend**: React con Vite, Axios para API calls
-- **Base de Datos**: SQLite (archivo local)
+- **Base de Datos**: SQL Server
 
 ## Prerrequisitos
 
@@ -23,20 +23,86 @@ Una aplicación de ticketing para eventos, construida con .NET 8 (backend) y Rea
    cd TicketingApp
    ```
 
-2. Construye y ejecuta con Docker Compose (incluye SQL Server):
+2. Construye y ejecuta con Docker Compose (incluye SQL Server y la aplicación completa):
    ```bash
    docker compose up --build -d
    ```
 
-3. Accede a la aplicación en `http://localhost:8080`
-
-   - Frontend: `http://localhost:8080`
-   - API Swagger: `http://localhost:8080/swagger`
+3. Accede a la aplicación:
+   - **Frontend y API**: `http://localhost:8080`
+   - **API Swagger**: `http://localhost:8080/swagger`
+   - **SQL Server**: `localhost:1433` (Usuario: sa, Contraseña: YourStrong!Pass123)
 
 4. Para detener:
    ```bash
    docker compose down
    ```
+
+### Puertos Levantados
+
+- **Aplicación (Frontend + API)**: `8080`
+- **SQL Server**: `1433`
+
+## Configuración de la Base de Datos
+
+Antes de ejecutar la aplicación, asegúrate de que las migraciones de Entity Framework estén aplicadas.
+
+### Agregar Migraciones (si no existen)
+
+1. Instala las herramientas de EF si no las tienes:
+   ```bash
+   dotnet tool install --global dotnet-ef
+   ```
+
+2. Desde el directorio raíz del proyecto:
+   ```bash
+   dotnet ef migrations add InitialCreate --project TicketingApp.API --startup-project TicketingApp.API
+   dotnet ef database update --project TicketingApp.API --startup-project TicketingApp.API
+   ```
+
+### En Docker
+
+Las migraciones se aplican automáticamente al iniciar la aplicación (configurado en Program.cs).
+
+## Pruebas de Endpoints
+
+Después de ejecutar `docker compose up --build -d`, puedes probar los endpoints usando curl, Postman o el navegador.
+
+### 1. Verificar que la API esté corriendo
+
+- Abre `http://localhost:8080/swagger` en el navegador para ver la documentación de la API.
+
+### 2. Sembrar datos de prueba
+
+- POST `http://localhost:8080/api/seed/seed`
+  - Esto crea un evento de ejemplo con sectores y asientos.
+
+### 3. Listar eventos
+
+- GET `http://localhost:8080/api/v1/events`
+  - Debería devolver el evento creado.
+
+### 4. Ver sectores de un evento
+
+- GET `http://localhost:8080/api/v1/events/{id}/sectors`
+  - Reemplaza `{id}` con el ID del evento (ej. 1).
+
+### 5. Ver disponibilidad de asientos
+
+- GET `http://localhost:8080/api/v1/events/{id}/seats`
+  - Muestra los asientos disponibles.
+
+### 6. Reservar un asiento
+
+- POST `http://localhost:8080/api/v1/reservations`
+  - Body JSON: `{"eventId": 1, "seatId": 1, "userId": 1}` (ajusta IDs según datos).
+
+### 7. Crear un nuevo evento (opcional)
+
+- POST `http://localhost:8080/api/v1/events`
+  - Body JSON: `{"name": "Nuevo Evento", "eventDate": "2026-06-01T20:00:00", "venue": "Lugar", "status": "Active"}`
+
+Usa herramientas como Postman para enviar requests con JSON bodies.
 
 ### Desarrollo Local
 

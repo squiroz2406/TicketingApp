@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import api from "../api/client";
-import SeatGrid from "../components/SeatGrid";
 import "./SeatsPage.css";
 
 // Datos de prueba para butacas con disposición de cine (50 butacas)
@@ -32,7 +31,7 @@ const generateMockSeats = (eventId) => {
 };
 
 export default function SeatsPage() {
-  const { eventId } = useParams();
+  const { sectorId } = useParams();
   const navigate = useNavigate();
   const [seats, setSeats] = useState([]);
   const [selectedSeats, setSelectedSeats] = useState([]);
@@ -40,19 +39,24 @@ export default function SeatsPage() {
   const [timeLeft, setTimeLeft] = useState(300); // 5 minutos = 300 segundos
 
   const loadSeats = () => {
-    api.get(`/events/${eventId}/seats`)
+    api.get(`/sectors/${sectorId}/seats`)
       .then(res => {
         if (res.data && res.data.length > 0) {
-          setSeats(res.data);
+          setSeats(res.data.map(seat => ({
+            id: seat.id,
+            row: seat.row,
+            col: seat.col,
+            seatNumber: seat.seatNumber,
+            status: seat.status,
+            sectorId: seat.sectorId
+          })));
         } else {
-          // Si no hay datos del API, usa datos de prueba
-          setSeats(generateMockSeats(eventId));
+          setSeats(generateMockSeats(sectorId));
         }
       })
       .catch(err => {
-        // Si hay error, usa datos de prueba
         console.warn("No se pudo conectar al API de butacas, usando datos de prueba", err);
-        setSeats(generateMockSeats(eventId));
+        setSeats(generateMockSeats(sectorId));
       })
       .finally(() => setLoading(false));
   };
@@ -75,10 +79,32 @@ export default function SeatsPage() {
     return () => clearInterval(timer);
   }, [eventId, navigate]);
 
-  // Calcular total de butacas seleccionadas
   const totalPrice = selectedSeats.length * 50;
 
-  // Convertir segundos a formato MM:SS
+  const reserveSelectedSeats = async () => {
+    if (selectedSeats.length === 0) return;
+
+    try {
+      for (const seat of selectedSeats) {
+        await api.post("/reservations", {
+          seatId: seat.id,
+          userId: 1
+        });
+      }
+
+      alert("Reserva exitosa");
+      setSelectedSeats([]);
+      loadSeats();
+    } catch (err) {
+      if (err.response?.status === 409) {
+        alert("Algunas butacas ya están reservadas o ocupadas");
+      } else {
+        alert("Error al reservar las butacas");
+      }
+      loadSeats();
+    }
+  };
+
   const formatTime = (seconds) => {
     const minutes = Math.floor(seconds / 60);
     const secs = seconds % 60;
@@ -142,25 +168,28 @@ export default function SeatsPage() {
                 
                 {/* Lado izquierdo del pasillo (5 asientos) */}
                 <div className="seats-section left">
-                  {seats.filter(s => s.row === row && s.col <= 5).map(seat => (
-                    <button
-                      key={seat.id}
-                      className={`seat ${seat.status} ${selectedSeats.includes(seat.seatNumber) ? 'selected' : ''}`}
-                      onClick={() => {
-                        if (seat.status === 'available') {
-                          setSelectedSeats(prev =>
-                            prev.includes(seat.seatNumber)
-                              ? prev.filter(s => s !== seat.seatNumber)
-                              : [...prev, seat.seatNumber]
-                          );
-                        }
-                      }}
-                      disabled={seat.status === 'occupied'}
-                      title={seat.seatNumber}
-                    >
-                      {seat.col}
-                    </button>
-                  ))}
+                  {seats.filter(s => s.row === row && s.col <= 5).map(seat => {
+                    const isSelected = selectedSeats.some(item => item.id === seat.id);
+                    return (
+                      <button
+                        key={seat.id}
+                        className={`seat ${seat.status} ${isSelected ? 'selected' : ''}`}
+                        onClick={() => {
+                          if (seat.status === 'available') {
+                            setSelectedSeats(prev =>
+                              prev.some(item => item.id === seat.id)
+                                ? prev.filter(item => item.id !== seat.id)
+                                : [...prev, { id: seat.id, label: seat.seatNumber }]
+                            );
+                          }
+                        }}
+                        disabled={seat.status === 'occupied'}
+                        title={seat.seatNumber}
+                      >
+                        {seat.col}
+                      </button>
+                    );
+                  })}
                 </div>
 
                 {/* Pasillo central */}
@@ -168,25 +197,28 @@ export default function SeatsPage() {
 
                 {/* Lado derecho del pasillo (5 asientos) */}
                 <div className="seats-section right">
-                  {seats.filter(s => s.row === row && s.col > 5).map(seat => (
-                    <button
-                      key={seat.id}
-                      className={`seat ${seat.status} ${selectedSeats.includes(seat.seatNumber) ? 'selected' : ''}`}
-                      onClick={() => {
-                        if (seat.status === 'available') {
-                          setSelectedSeats(prev =>
-                            prev.includes(seat.seatNumber)
-                              ? prev.filter(s => s !== seat.seatNumber)
-                              : [...prev, seat.seatNumber]
-                          );
-                        }
-                      }}
-                      disabled={seat.status === 'occupied'}
-                      title={seat.seatNumber}
-                    >
-                      {seat.col}
-                    </button>
-                  ))}
+                  {seats.filter(s => s.row === row && s.col > 5).map(seat => {
+                    const isSelected = selectedSeats.some(item => item.id === seat.id);
+                    return (
+                      <button
+                        key={seat.id}
+                        className={`seat ${seat.status} ${isSelected ? 'selected' : ''}`}
+                        onClick={() => {
+                          if (seat.status === 'available') {
+                            setSelectedSeats(prev =>
+                              prev.some(item => item.id === seat.id)
+                                ? prev.filter(item => item.id !== seat.id)
+                                : [...prev, { id: seat.id, label: seat.seatNumber }]
+                            );
+                          }
+                        }}
+                        disabled={seat.status === 'occupied'}
+                        title={seat.seatNumber}
+                      >
+                        {seat.col}
+                      </button>
+                    );
+                  })}
                 </div>
 
                 <span className="row-label">{row}</span>
@@ -201,10 +233,10 @@ export default function SeatsPage() {
         <div className="summary-content">
           <div className="seats-info">
             <p>Butacas seleccionadas: <strong>{selectedSeats.length}</strong></p>
-            <p>Butacas: <strong>{selectedSeats.join(', ') || 'Ninguna'}</strong></p>
+            <p>Butacas: <strong>{selectedSeats.map(seat => seat.label).join(', ') || 'Ninguna'}</strong></p>
             <p>Total a pagar: <strong>${totalPrice.toFixed(2)}</strong></p>
           </div>
-          <button className="confirm-btn" disabled={selectedSeats.length === 0}>
+          <button className="confirm-btn" disabled={selectedSeats.length === 0} onClick={reserveSelectedSeats}>
             Confirmar Compra (${totalPrice.toFixed(2)})
           </button>
         </div>

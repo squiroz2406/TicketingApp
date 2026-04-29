@@ -7,6 +7,11 @@
         "/^cd /home/sof-quiroz/Escritorio/1°\\\\ Cuatri\\\\ 2026/Proyecto\\\\ Software/TicketingApp && mv TicketingApp\\.Domain/Entities/Evento\\.cs TicketingApp\\.Domain/Entities/Event\\.cs$/": {
             "approve": true,
             "matchCommandLine": true
+        },
+        "/^cd /home/sof-quiroz/Escritorio/1er\\\\ Cuatri\\\\ 2026/Proyecto\\\\ Software/TicketingApp && dotnet ef migrations add \"AddUserRelationships\" --project TicketingApp\\.Infrastructure --startup-project TicketingApp\\.API$/": {
+            "approve": true,
+            "matchCommandLine": true
         }
-    }
+    },
+    "postman.settings.dotenv-detection-notification-visibility": false
 }

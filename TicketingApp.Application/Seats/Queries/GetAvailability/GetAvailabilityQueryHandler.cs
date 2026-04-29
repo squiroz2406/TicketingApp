@@ -1,3 +1,5 @@
+using System;
+using System.Linq;
 using MediatR;
 using TicketingApp.Application.Seats.DTOs;
 using TicketingApp.Application.Seats.Interfaces;
@@ -19,9 +21,10 @@ namespace TicketingApp.Application.Seats.Queries.GetAvailability
             return seats.Select(s => new SeatDto
             {
                 Id = s.Id,
-                RowIdentifier = s.RowIdentifier,
-                SeatNumber = s.SeatNumber,
-                Status = s.Status.ToString(),
+                Row = s.RowIdentifier,
+                Col = s.SeatNumber,
+                SeatNumber = $"{s.RowIdentifier}{s.SeatNumber}",
+                Status = s.Status.Equals("Available", StringComparison.OrdinalIgnoreCase) ? "available" : "occupied",
                 SectorId = s.SectorId
             }).ToList();
         }

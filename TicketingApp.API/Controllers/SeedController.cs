@@ -1,3 +1,5 @@
+using System;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using TicketingApp.Domain.Entities;
 using TicketingApp.Infrastructure.Persistence;
@@ -18,48 +20,76 @@ namespace TicketingApp.API.Controllers
         [HttpPost("seed")]
         public async Task<IActionResult> SeedDatabase()
         {
-            // Crear evento
-            var evento = new Event
-            {
-                Name = "Concierto de Rock 2026",
-                EventDate = new DateTime(2026, 5, 15, 20, 0, 0),
-                Venue = "Arena 1",
-                Status = "Active"
-            };
-
-            await _context.Events.AddAsync(evento);
+            _context.AuditLogs.RemoveRange(_context.AuditLogs);
+            _context.Reservations.RemoveRange(_context.Reservations);
+            _context.Seats.RemoveRange(_context.Seats);
+            _context.Sectors.RemoveRange(_context.Sectors);
+            _context.Events.RemoveRange(_context.Events);
             await _context.SaveChangesAsync();
 
-            // Crear sector
-            var sector = new Sector
+            var movies = new[]
             {
-                Name = "Sector A",
-                EventId = evento.Id,
-                Price = 50.00m,
-                Capacity = 100
+                new { Name = "Dune: Parte Dos", Date = new System.DateTime(2026, 5, 15, 20, 30), Venue = "Sala 1" },
+                new { Name = "Oppenheimer", Date = new System.DateTime(2026, 5, 16, 19, 0), Venue = "Sala 2" },
+                new { Name = "Killers of the Flower Moon", Date = new System.DateTime(2026, 5, 17, 21, 0), Venue = "Sala 3" },
+                new { Name = "Barbie", Date = new System.DateTime(2026, 5, 18, 18, 30), Venue = "Sala 1" },
+                new { Name = "Godzilla x Kong", Date = new System.DateTime(2026, 5, 19, 20, 0), Venue = "Sala 2" },
+                new { Name = "Avatar 3", Date = new System.DateTime(2026, 5, 20, 22, 0), Venue = "Sala 4" },
+                new { Name = "The Flash", Date = new System.DateTime(2026, 5, 21, 17, 0), Venue = "Sala 5" },
+                new { Name = "Spider-Man: Beyond the Spider-Verse", Date = new System.DateTime(2026, 5, 22, 20, 30), Venue = "Sala 3" }
             };
 
-            await _context.Sectors.AddAsync(sector);
-            await _context.SaveChangesAsync();
-
-            // Crear 100 asientos (10x10)
-            for (int i = 1; i <= 10; i++)
+            foreach (var movie in movies)
             {
-                for (int j = 1; j <= 10; j++)
+                var evento = new Event
                 {
-                    var seat = new Seat
+                    Name = movie.Name,
+                    EventDate = movie.Date,
+                    Venue = movie.Venue,
+                    Status = "Active"
+                };
+
+                await _context.Events.AddAsync(evento);
+                await _context.SaveChangesAsync();
+
+                var sectors = new[]
+                {
+                    new { Name = "14:30", Price = 70.00m },
+                    new { Name = "20:30", Price = 90.00m }
+                };
+
+                foreach (var sectorData in sectors)
+                {
+                    var sector = new Sector
                     {
-                        RowIdentifier = $"Fila {i}",
-                        SeatNumber = j,
-                        SectorId = sector.Id,
-                        Status = SeatStatus.Available.ToString()
+                        Name = sectorData.Name,
+                        EventId = evento.Id,
+                        Price = sectorData.Price,
+                        Capacity = 50
                     };
 
-                    await _context.Seats.AddAsync(seat);
+                    await _context.Sectors.AddAsync(sector);
+                    await _context.SaveChangesAsync();
+
+                    for (char row = 'A'; row <= 'E'; row++)
+                    {
+                        for (int col = 1; col <= 10; col++)
+                        {
+                            var seat = new Seat
+                            {
+                                RowIdentifier = row.ToString(),
+                                SeatNumber = col,
+                                SectorId = sector.Id,
+                                Status = SeatStatus.Available.ToString()
+                            };
+
+                            await _context.Seats.AddAsync(seat);
+                        }
+                    }
+
+                    await _context.SaveChangesAsync();
                 }
             }
-
-            await _context.SaveChangesAsync();
 
             return Ok("Database seeded successfully");
         }
