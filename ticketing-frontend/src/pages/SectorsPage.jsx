@@ -10,7 +10,7 @@ export default function SectorsPage() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    api.get(`/v1/events/${eventId}/sectors`)
+    api.get(`/events/${eventId}/sectors`)
       .then(res => {
         setSectors(res.data || []);
       })

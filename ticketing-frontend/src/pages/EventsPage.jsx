@@ -18,6 +18,23 @@ const POSTER_MAP = {
   "Black Panther: Wakanda Forever": "https://image.tmdb.org/t/p/w342/sv1xJUazXeYqALzczSZ3O6nkH75.jpg"
 };
 
+const CATEGORY_MAP = {
+  "Dune: Parte Dos": "Acción",
+  "Oppenheimer": "Drama",
+  "Killers of the Flower Moon": "Drama",
+  "Barbie": "Comedia",
+  "Godzilla x Kong": "Acción",
+  "Avatar 3": "Acción",
+  "The Flash": "Acción",
+  "Spider-Man: Beyond the Spider-Verse": "Acción",
+  "The Batman": "Acción",
+  "Top Gun: Maverick": "Acción",
+  "Guardians of the Galaxy Vol. 3": "Acción",
+  "Black Panther: Wakanda Forever": "Acción"
+};
+
+const CATEGORIES = ["Todos", "Acción", "Drama", "Comedia"];
+
 const createMockSectors = (eventId) => [
   { id: eventId * 10 + 1, name: "14:30", price: 70.0, capacity: 50 },
   { id: eventId * 10 + 2, name: "20:30", price: 90.0, capacity: 50 }
@@ -30,6 +47,7 @@ const MOCK_EVENTS = [
     fecha: new Date(2026, 4, 15, 20, 30),
     poster: POSTER_MAP["Dune: Parte Dos"],
     venue: "Sala 1",
+    category: CATEGORY_MAP["Dune: Parte Dos"],
     sectors: createMockSectors(1)
   },
   {
@@ -38,6 +56,7 @@ const MOCK_EVENTS = [
     fecha: new Date(2026, 4, 16, 19, 0),
     poster: POSTER_MAP["Oppenheimer"],
     venue: "Sala 2",
+    category: CATEGORY_MAP["Oppenheimer"],
     sectors: createMockSectors(2)
   },
   {
@@ -46,6 +65,7 @@ const MOCK_EVENTS = [
     fecha: new Date(2026, 4, 17, 21, 0),
     poster: POSTER_MAP["Killers of the Flower Moon"],
     venue: "Sala 3",
+    category: CATEGORY_MAP["Killers of the Flower Moon"],
     sectors: createMockSectors(3)
   },
   {
@@ -54,6 +74,7 @@ const MOCK_EVENTS = [
     fecha: new Date(2026, 4, 18, 18, 30),
     poster: POSTER_MAP["Barbie"],
     venue: "Sala 1",
+    category: CATEGORY_MAP["Barbie"],
     sectors: createMockSectors(4)
   },
   {
@@ -62,6 +83,7 @@ const MOCK_EVENTS = [
     fecha: new Date(2026, 4, 19, 20, 0),
     poster: POSTER_MAP["Godzilla x Kong"],
     venue: "Sala 2",
+    category: CATEGORY_MAP["Godzilla x Kong"],
     sectors: createMockSectors(5)
   },
   {
@@ -70,6 +92,7 @@ const MOCK_EVENTS = [
     fecha: new Date(2026, 4, 20, 22, 0),
     poster: POSTER_MAP["Avatar 3"],
     venue: "Sala 4",
+    category: CATEGORY_MAP["Avatar 3"],
     sectors: createMockSectors(6)
   },
   {
@@ -78,6 +101,7 @@ const MOCK_EVENTS = [
     fecha: new Date(2026, 4, 21, 17, 0),
     poster: POSTER_MAP["The Flash"],
     venue: "Sala 5",
+    category: CATEGORY_MAP["The Flash"],
     sectors: createMockSectors(7)
   },
   {
@@ -86,6 +110,7 @@ const MOCK_EVENTS = [
     fecha: new Date(2026, 4, 22, 20, 30),
     poster: POSTER_MAP["Spider-Man: Beyond the Spider-Verse"],
     venue: "Sala 3",
+    category: CATEGORY_MAP["Spider-Man: Beyond the Spider-Verse"],
     sectors: createMockSectors(8)
   },
   {
@@ -94,6 +119,7 @@ const MOCK_EVENTS = [
     fecha: new Date(2026, 4, 23, 19, 30),
     poster: POSTER_MAP["The Batman"],
     venue: "Sala 6",
+    category: CATEGORY_MAP["The Batman"],
     sectors: createMockSectors(9)
   },
   {
@@ -102,6 +128,7 @@ const MOCK_EVENTS = [
     fecha: new Date(2026, 4, 24, 21, 0),
     poster: POSTER_MAP["Top Gun: Maverick"],
     venue: "Sala 7",
+    category: CATEGORY_MAP["Top Gun: Maverick"],
     sectors: createMockSectors(10)
   },
   {
@@ -110,6 +137,7 @@ const MOCK_EVENTS = [
     fecha: new Date(2026, 4, 25, 18, 0),
     poster: POSTER_MAP["Guardians of the Galaxy Vol. 3"],
     venue: "Sala 8",
+    category: CATEGORY_MAP["Guardians of the Galaxy Vol. 3"],
     sectors: createMockSectors(11)
   },
   {
@@ -118,6 +146,7 @@ const MOCK_EVENTS = [
     fecha: new Date(2026, 4, 26, 20, 0),
     poster: POSTER_MAP["Black Panther: Wakanda Forever"],
     venue: "Sala 9",
+    category: CATEGORY_MAP["Black Panther: Wakanda Forever"],
     sectors: createMockSectors(12)
   }
 ];
@@ -126,8 +155,11 @@ const getPoster = (name) => POSTER_MAP[name] || "";
 
 export default function EventsPage() {
   const [events, setEvents] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState("Todos");
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+
+  const getEventCategory = (name) => CATEGORY_MAP[name] || "General";
 
   const createEventFromApi = (event) => ({
     id: event.id,
@@ -135,11 +167,12 @@ export default function EventsPage() {
     fecha: event.eventDate,
     poster: getPoster(event.name),
     venue: event.venue,
+    category: getEventCategory(event.name),
     sectors: event.sectors || []
   });
 
   useEffect(() => {
-    api.get("/v1/events")
+    api.get("/events")
       .then(res => {
         if (res.data && res.data.length > 0) {
           setEvents(res.data.map(createEventFromApi));
@@ -154,6 +187,10 @@ export default function EventsPage() {
       .finally(() => setLoading(false));
   }, []);
 
+  const filteredEvents = selectedCategory === "Todos"
+    ? events
+    : events.filter(e => e.category === selectedCategory);
+
   return (
     <div className="events-container">
       {/* Header del Cine */}
@@ -164,20 +201,25 @@ export default function EventsPage() {
 
       {/* Filtros */}
       <div className="filters-section">
-        <button className="filter-btn active">Todos</button>
-        <button className="filter-btn">Acción</button>
-        <button className="filter-btn">Drama</button>
-        <button className="filter-btn">Comedia</button>
+        {CATEGORIES.map(category => (
+          <button
+            key={category}
+            className={`filter-btn ${selectedCategory === category ? 'active' : ''}`}
+            onClick={() => setSelectedCategory(category)}
+          >
+            {category}
+          </button>
+        ))}
       </div>
 
       {/* Grid de Películas */}
       <div className="events-grid">
         {loading ? (
           <p className="no-events">Cargando películas...</p>
-        ) : events.length === 0 ? (
-          <p className="no-events">No hay películas disponibles</p>
+        ) : filteredEvents.length === 0 ? (
+          <p className="no-events">No hay películas disponibles para esta categoría</p>
         ) : (
-          events.map(e => (
+          filteredEvents.map(e => (
             <div key={e.id} className="event-card" onClick={() => navigate(`/events/${e.id}/sectors`)}>
               {/* Poster */}
               <div className="movie-poster">
@@ -193,7 +235,7 @@ export default function EventsPage() {
                 
                 <div className="movie-details">
                   <span className="rating">PG-13</span>
-                  <span className="genre">Thriller</span>
+                  <span className="genre">{e.category || 'General'}</span>
                 </div>
 
                 <p className="date-time">

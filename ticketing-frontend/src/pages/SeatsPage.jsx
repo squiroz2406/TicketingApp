@@ -77,7 +77,7 @@ export default function SeatsPage() {
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [eventId, navigate]);
+  }, [sectorId, navigate]);
 
   const totalPrice = selectedSeats.length * 50;
 

@@ -55,7 +55,7 @@ public class ReserveSeatCommandHandler : IRequestHandler<ReserveSeatCommand, boo
             Action = "Reserve",
             EntityType = "Seat",
             EntityId = request.SeatId.ToString(),
-            Details = $"Seat {seat.RowIdentifier}{seat.SeatNumber} reserved for event {seat.Sector.EventId}"
+            Details = $"Seat {seat.RowIdentifier}{seat.SeatNumber} reserved{(seat.Sector != null ? $" for event {seat.Sector.EventId}" : string.Empty)}"
         };
         await _auditLogRepository.AddAsync(auditLog);
 

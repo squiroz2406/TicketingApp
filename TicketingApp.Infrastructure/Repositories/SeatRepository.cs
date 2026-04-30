@@ -16,7 +16,9 @@ namespace TicketingApp.Infrastructure.Repositories
 
         public async Task<Seat?> GetByIdAsync(Guid id)
         {
-            return await _context.Seats.FindAsync(id);
+            return await _context.Seats
+                .Include(s => s.Sector)
+                .FirstOrDefaultAsync(s => s.Id == id);
         }
 
         public async Task<List<Seat>> GetByEventIdAsync(int eventId)
