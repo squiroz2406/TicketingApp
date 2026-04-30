@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TicketingApp.Domain.Entities;
 using TicketingApp.Infrastructure.Identity;
 
@@ -92,7 +93,8 @@ public class ApplicationDbContext
 
         modelBuilder.Entity<Seat>()
             .Property(s => s.Status)
-            .HasColumnName("Status");
+            .HasColumnName("Status")
+            .HasConversion(new EnumToStringConverter<SeatStatus>());
 
         // Reservation configuration
         modelBuilder.Entity<Reservation>()

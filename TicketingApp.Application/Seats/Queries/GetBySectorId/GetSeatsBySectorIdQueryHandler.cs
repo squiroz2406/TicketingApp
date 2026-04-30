@@ -24,7 +24,7 @@ public class GetSeatsBySectorIdQueryHandler : IRequestHandler<GetSeatsBySectorId
             Row = s.RowIdentifier,
             Col = s.SeatNumber,
             SeatNumber = $"{s.RowIdentifier}{s.SeatNumber}",
-            Status = s.Status.Equals("Available", StringComparison.OrdinalIgnoreCase) ? "available" : "occupied",
+            Status = s.Status == SeatStatus.Available ? "available" : "occupied",
             SectorId = s.SectorId
         }).ToList();
     }

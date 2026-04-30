@@ -10,8 +10,8 @@ const POSTER_MAP = {
   "Barbie": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgKueimb5cxvI_C6Qg0XcjUzeuxopacmEmVA&s",
   "Godzilla x Kong": "https://image.tmdb.org/t/p/w342/z1p34vh7dEOnLDmyCrlUVLuoDzd.jpg",
   "Avatar 3": "https://image.tmdb.org/t/p/w342/t6HIqrRAclMCA60NsSmeqe9RmNV.jpg",
-  "The Flash": "https://image.tmdb.org/t/p/w342/4noF7ZJYRLkKw2RJR3fsFmvTCbD.jpg",
-  "Spider-Man: Beyond the Spider-Verse": "https://image.tmdb.org/t/p/w342/qNLhc3Y6INrVfV7Nn7BSXU5vtti.jpg",
+  "The Flash": "https://static.posters.cz/image/1300/183184.jpg",
+  "Spider-Man: Beyond the Spider-Verse": "https://posterspy.com/wp-content/uploads/2025/10/beyondspy.jpg",
   "The Batman": "https://image.tmdb.org/t/p/w342/74xTEgt7R36Fpooo50r9T25onhq.jpg",
   "Top Gun: Maverick": "https://image.tmdb.org/t/p/w342/62HCnUTziyWcpDaBO2i1DX17ljH.jpg",
   "Guardians of the Galaxy Vol. 3": "https://image.tmdb.org/t/p/w342/r2J02Z2OpNTctfOSN1Ydgii51I3.jpg",
@@ -253,10 +253,19 @@ export default function EventsPage() {
 
                 <div className="availability">
                   <div className="seats-available">
-                    <span className="available-count">{e.sectors?.reduce((total, sector) => total + (sector.capacity ?? 0), 0) || 0} butacas</span>
-                    <div className="availability-bar">
-                      <div className="filled" style={{ width: '75%' }}></div>
-                    </div>
+                    {(() => {
+                      const totalCapacity = e.sectors?.reduce((total, sector) => total + (sector.capacity ?? 0), 0) || 0;
+                      const totalAvailable = e.sectors?.reduce((total, sector) => total + (sector.availableSeats ?? 0), 0) || 0;
+                      const percentageAvailable = totalCapacity > 0 ? Math.round((totalAvailable / totalCapacity) * 100) : 0;
+                      return (
+                        <>
+                          <span className="available-count">{totalAvailable} butacas disponibles</span>
+                          <div className="availability-bar">
+                            <div className="filled" style={{ width: `${percentageAvailable}%` }}></div>
+                          </div>
+                        </>
+                      );
+                    })()}
                   </div>
                 </div>
 

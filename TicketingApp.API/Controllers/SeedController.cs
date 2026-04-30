@@ -20,12 +20,18 @@ namespace TicketingApp.API.Controllers
         [HttpPost("seed")]
         public async Task<IActionResult> SeedDatabase()
         {
-            
+            // Clear existing data to avoid duplicates
+            _context.Reservations.RemoveRange(_context.Reservations);
+            _context.Seats.RemoveRange(_context.Seats);
+            _context.Sectors.RemoveRange(_context.Sectors);
+            _context.Events.RemoveRange(_context.Events);
+            _context.AuditLogs.RemoveRange(_context.AuditLogs);
             await _context.SaveChangesAsync();
+            
             var movies = new[]
             {
                 "Dune: Parte Dos",
-                "Oppenheimer",
+                "Oppenheimer", 
                 "Killers of the Flower Moon",
                 "Barbie",
                 "Godzilla x Kong",
@@ -88,7 +94,7 @@ namespace TicketingApp.API.Controllers
                             SectorId = sector.Id,
                             RowIdentifier = row.ToString(),
                             SeatNumber = col,
-                            Status = SeatStatus.Available.ToString()
+                            Status = SeatStatus.Available
                         });
                     }
                 }

@@ -23,6 +23,7 @@ namespace TicketingApp.Infrastructure.Repositories
         {
             return await _context.Events
                 .Include(e => e.Sectors)
+                    .ThenInclude(s => s.Seats)
                 .ToListAsync();
         }
 

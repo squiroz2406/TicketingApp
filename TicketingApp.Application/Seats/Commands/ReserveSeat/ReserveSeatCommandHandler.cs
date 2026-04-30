@@ -29,13 +29,13 @@ public class ReserveSeatCommandHandler : IRequestHandler<ReserveSeatCommand, boo
     public async Task<bool> Handle(ReserveSeatCommand request, CancellationToken cancellationToken)
     {
         var seat = await _seatRepository.GetByIdAsync(request.SeatId);
-        if (seat == null || seat.Status != "Available")
+        if (seat == null || seat.Status != SeatStatus.Available)
         {
             return false;
         }
 
         // Change seat status
-        seat.Status = "Reserved";
+        seat.Status = SeatStatus.Reserved;
         await _seatRepository.UpdateAsync(seat);
 
         // Create reservation

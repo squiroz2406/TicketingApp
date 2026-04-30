@@ -8,7 +8,7 @@ public class Seat
 
     public string RowIdentifier { get; set; } = string.Empty;
     public int SeatNumber { get; set; }
-    public string Status { get; set; } = "Available";
+    public SeatStatus Status { get; set; } = SeatStatus.Available;
 
     // Para control de concurrencia
     public byte[] Version { get; set; } = Array.Empty<byte>();

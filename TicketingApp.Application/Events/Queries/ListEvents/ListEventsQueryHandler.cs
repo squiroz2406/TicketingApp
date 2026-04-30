@@ -3,6 +3,7 @@ using System.Linq;
 using MediatR;
 using TicketingApp.Application.Events.DTOs;
 using TicketingApp.Application.Events.Interfaces;
+using TicketingApp.Domain.Entities;
 
 namespace TicketingApp.Application.Events.Queries.ListEvents;
 
@@ -29,7 +30,8 @@ public class ListEventsQueryHandler : IRequestHandler<ListEventsQuery, List<Even
                 Id = s.Id,
                 Name = s.Name,
                 Price = s.Price,
-                Capacity = s.Capacity
+                Capacity = s.Capacity,
+                AvailableSeats = s.Seats?.Count(seat => seat.Status == SeatStatus.Available) ?? 0
             }).ToList() ?? new List<SectorDto>()
         }).ToList();
     }
