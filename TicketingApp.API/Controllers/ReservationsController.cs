@@ -16,16 +16,16 @@ public class ReservationsController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> Reserve([FromBody] ReserveSeatCommand command)
+    public async Task<IActionResult> Reserve([FromBody] ReserveSeatsCommand command)
     {
         var result = await _mediator.Send(command);
         if (result)
         {
-            return Ok();
+            return Ok(new { message = "Reserva exitosa" });
         }
         else
         {
-            return Conflict("Seat ocupada");
+            return Conflict("Algunas butacas ya estaban reservadas o no existen");
         }
     }
 }

@@ -36,6 +36,7 @@ export default function SeatsPage() {
   const [seats, setSeats] = useState([]);
   const [selectedSeats, setSelectedSeats] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [isReserving, setIsReserving] = useState(false);
   const [timeLeft, setTimeLeft] = useState(300); // 5 minutos = 300 segundos
 
   const loadSeats = () => {
@@ -84,24 +85,26 @@ export default function SeatsPage() {
   const reserveSelectedSeats = async () => {
     if (selectedSeats.length === 0) return;
 
+    setIsReserving(true);
     try {
-      for (const seat of selectedSeats) {
-        await api.post("/reservations", {
-          seatId: seat.id,
-          userId: 1
-        });
-      }
+      const seatIds = selectedSeats.map(seat => seat.id);
+      await api.post("/reservations", {
+        seatIds,
+        userId: 1
+      });
 
       alert("Reserva exitosa");
       setSelectedSeats([]);
-      loadSeats();
+      navigate('/');
     } catch (err) {
       if (err.response?.status === 409) {
-        alert("Algunas butacas ya están reservadas o ocupadas");
+        alert("Algunas butacas ya están reservadas o no existen");
       } else {
         alert("Error al reservar las butacas");
       }
       loadSeats();
+    } finally {
+      setIsReserving(false);
     }
   };
 
@@ -236,8 +239,8 @@ export default function SeatsPage() {
             <p>Butacas: <strong>{selectedSeats.map(seat => seat.label).join(', ') || 'Ninguna'}</strong></p>
             <p>Total a pagar: <strong>${totalPrice.toFixed(2)}</strong></p>
           </div>
-          <button className="confirm-btn" disabled={selectedSeats.length === 0} onClick={reserveSelectedSeats}>
-            Confirmar Compra (${totalPrice.toFixed(2)})
+          <button className="confirm-btn" disabled={selectedSeats.length === 0 || isReserving} onClick={reserveSelectedSeats}>
+            {isReserving ? 'Reservando...' : `Confirmar Compra ($${totalPrice.toFixed(2)})`}
           </button>
         </div>
       </div>

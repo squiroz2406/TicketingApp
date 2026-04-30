@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using MediatR;
+using TicketingApp.Domain.Entities;
 using TicketingApp.Application.Seats.DTOs;
 using TicketingApp.Application.Seats.Interfaces;
 

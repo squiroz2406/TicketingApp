@@ -1,7 +1,9 @@
 using System;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using TicketingApp.Domain.Entities;
+using TicketingApp.Infrastructure.Identity;
 using TicketingApp.Infrastructure.Persistence;
 
 namespace TicketingApp.API.Controllers
@@ -26,8 +28,34 @@ namespace TicketingApp.API.Controllers
             _context.Sectors.RemoveRange(_context.Sectors);
             _context.Events.RemoveRange(_context.Events);
             _context.AuditLogs.RemoveRange(_context.AuditLogs);
+            _context.Users.RemoveRange(_context.Users);
             await _context.SaveChangesAsync();
             
+            var seedUser = new ApplicationUser
+            {
+                Id = 1,
+                UserName = "guest",
+                NormalizedUserName = "GUEST",
+                Email = "guest@example.com",
+                NormalizedEmail = "GUEST@EXAMPLE.COM",
+                EmailConfirmed = true,
+                SecurityStamp = Guid.NewGuid().ToString(),
+                ConcurrencyStamp = Guid.NewGuid().ToString()
+            };
+
+            _context.Database.OpenConnection();
+            try
+            {
+                _context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT [User] ON");
+                await _context.Users.AddAsync(seedUser);
+                await _context.SaveChangesAsync();
+                _context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT [User] OFF");
+            }
+            finally
+            {
+                _context.Database.CloseConnection();
+            }
+
             var movies = new[]
             {
                 "Dune: Parte Dos",
