@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/home/sof-quiroz/Escritorio/1er Cuatri 2026/Proyecto Software/TicketingApp/TicketingApp.Infrastructure/TicketingApp.Infrastructure.csproj": {}
+    "/media/unaj/e28fd9d9-4a7e-4e4d-9144-718f55c8c453/Proyectos/TicketingApp/TicketingApp.Infrastructure/TicketingApp.Infrastructure.csproj": {}
   },
   "projects": {
-    "/home/sof-quiroz/Escritorio/1er Cuatri 2026/Proyecto Software/TicketingApp/TicketingApp.Application/TicketingApp.Application.csproj": {
+    "/media/unaj/e28fd9d9-4a7e-4e4d-9144-718f55c8c453/Proyectos/TicketingApp/TicketingApp.Application/TicketingApp.Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/sof-quiroz/Escritorio/1er Cuatri 2026/Proyecto Software/TicketingApp/TicketingApp.Application/TicketingApp.Application.csproj",
+        "projectUniqueName": "/media/unaj/e28fd9d9-4a7e-4e4d-9144-718f55c8c453/Proyectos/TicketingApp/TicketingApp.Application/TicketingApp.Application.csproj",
         "projectName": "TicketingApp.Application",
-        "projectPath": "/home/sof-quiroz/Escritorio/1er Cuatri 2026/Proyecto Software/TicketingApp/TicketingApp.Application/TicketingApp.Application.csproj",
-        "packagesPath": "/home/sof-quiroz/.nuget/packages/",
-        "outputPath": "/home/sof-quiroz/Escritorio/1er Cuatri 2026/Proyecto Software/TicketingApp/TicketingApp.Application/obj/",
+        "projectPath": "/media/unaj/e28fd9d9-4a7e-4e4d-9144-718f55c8c453/Proyectos/TicketingApp/TicketingApp.Application/TicketingApp.Application.csproj",
+        "packagesPath": "/home/unaj/.nuget/packages/",
+        "outputPath": "/media/unaj/e28fd9d9-4a7e-4e4d-9144-718f55c8c453/Proyectos/TicketingApp/TicketingApp.Application/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/sof-quiroz/.nuget/NuGet/NuGet.Config"
+          "/home/unaj/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -26,8 +26,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "/home/sof-quiroz/Escritorio/1er Cuatri 2026/Proyecto Software/TicketingApp/TicketingApp.Domain/TicketingApp.Domain.csproj": {
-                "projectPath": "/home/sof-quiroz/Escritorio/1er Cuatri 2026/Proyecto Software/TicketingApp/TicketingApp.Domain/TicketingApp.Domain.csproj"
+              "/media/unaj/e28fd9d9-4a7e-4e4d-9144-718f55c8c453/Proyectos/TicketingApp/TicketingApp.Domain/TicketingApp.Domain.csproj": {
+                "projectPath": "/media/unaj/e28fd9d9-4a7e-4e4d-9144-718f55c8c453/Proyectos/TicketingApp/TicketingApp.Domain/TicketingApp.Domain.csproj"
               }
             }
           }
@@ -68,21 +68,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/home/sof-quiroz/.dotnet/sdk/8.0.420/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/home/unaj/.dotnet/sdk/8.0.420/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "/home/sof-quiroz/Escritorio/1er Cuatri 2026/Proyecto Software/TicketingApp/TicketingApp.Domain/TicketingApp.Domain.csproj": {
+    "/media/unaj/e28fd9d9-4a7e-4e4d-9144-718f55c8c453/Proyectos/TicketingApp/TicketingApp.Domain/TicketingApp.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/sof-quiroz/Escritorio/1er Cuatri 2026/Proyecto Software/TicketingApp/TicketingApp.Domain/TicketingApp.Domain.csproj",
+        "projectUniqueName": "/media/unaj/e28fd9d9-4a7e-4e4d-9144-718f55c8c453/Proyectos/TicketingApp/TicketingApp.Domain/TicketingApp.Domain.csproj",
         "projectName": "TicketingApp.Domain",
-        "projectPath": "/home/sof-quiroz/Escritorio/1er Cuatri 2026/Proyecto Software/TicketingApp/TicketingApp.Domain/TicketingApp.Domain.csproj",
-        "packagesPath": "/home/sof-quiroz/.nuget/packages/",
-        "outputPath": "/home/sof-quiroz/Escritorio/1er Cuatri 2026/Proyecto Software/TicketingApp/TicketingApp.Domain/obj/",
+        "projectPath": "/media/unaj/e28fd9d9-4a7e-4e4d-9144-718f55c8c453/Proyectos/TicketingApp/TicketingApp.Domain/TicketingApp.Domain.csproj",
+        "packagesPath": "/home/unaj/.nuget/packages/",
+        "outputPath": "/media/unaj/e28fd9d9-4a7e-4e4d-9144-718f55c8c453/Proyectos/TicketingApp/TicketingApp.Domain/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/sof-quiroz/.nuget/NuGet/NuGet.Config"
+          "/home/unaj/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -126,21 +126,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/home/sof-quiroz/.dotnet/sdk/8.0.420/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/home/unaj/.dotnet/sdk/8.0.420/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "/home/sof-quiroz/Escritorio/1er Cuatri 2026/Proyecto Software/TicketingApp/TicketingApp.Infrastructure/TicketingApp.Infrastructure.csproj": {
+    "/media/unaj/e28fd9d9-4a7e-4e4d-9144-718f55c8c453/Proyectos/TicketingApp/TicketingApp.Infrastructure/TicketingApp.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/sof-quiroz/Escritorio/1er Cuatri 2026/Proyecto Software/TicketingApp/TicketingApp.Infrastructure/TicketingApp.Infrastructure.csproj",
+        "projectUniqueName": "/media/unaj/e28fd9d9-4a7e-4e4d-9144-718f55c8c453/Proyectos/TicketingApp/TicketingApp.Infrastructure/TicketingApp.Infrastructure.csproj",
         "projectName": "TicketingApp.Infrastructure",
-        "projectPath": "/home/sof-quiroz/Escritorio/1er Cuatri 2026/Proyecto Software/TicketingApp/TicketingApp.Infrastructure/TicketingApp.Infrastructure.csproj",
-        "packagesPath": "/home/sof-quiroz/.nuget/packages/",
-        "outputPath": "/home/sof-quiroz/Escritorio/1er Cuatri 2026/Proyecto Software/TicketingApp/TicketingApp.Infrastructure/obj/",
+        "projectPath": "/media/unaj/e28fd9d9-4a7e-4e4d-9144-718f55c8c453/Proyectos/TicketingApp/TicketingApp.Infrastructure/TicketingApp.Infrastructure.csproj",
+        "packagesPath": "/home/unaj/.nuget/packages/",
+        "outputPath": "/media/unaj/e28fd9d9-4a7e-4e4d-9144-718f55c8c453/Proyectos/TicketingApp/TicketingApp.Infrastructure/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/sof-quiroz/.nuget/NuGet/NuGet.Config"
+          "/home/unaj/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -152,11 +152,11 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "/home/sof-quiroz/Escritorio/1er Cuatri 2026/Proyecto Software/TicketingApp/TicketingApp.Application/TicketingApp.Application.csproj": {
-                "projectPath": "/home/sof-quiroz/Escritorio/1er Cuatri 2026/Proyecto Software/TicketingApp/TicketingApp.Application/TicketingApp.Application.csproj"
+              "/media/unaj/e28fd9d9-4a7e-4e4d-9144-718f55c8c453/Proyectos/TicketingApp/TicketingApp.Application/TicketingApp.Application.csproj": {
+                "projectPath": "/media/unaj/e28fd9d9-4a7e-4e4d-9144-718f55c8c453/Proyectos/TicketingApp/TicketingApp.Application/TicketingApp.Application.csproj"
               },
-              "/home/sof-quiroz/Escritorio/1er Cuatri 2026/Proyecto Software/TicketingApp/TicketingApp.Domain/TicketingApp.Domain.csproj": {
-                "projectPath": "/home/sof-quiroz/Escritorio/1er Cuatri 2026/Proyecto Software/TicketingApp/TicketingApp.Domain/TicketingApp.Domain.csproj"
+              "/media/unaj/e28fd9d9-4a7e-4e4d-9144-718f55c8c453/Proyectos/TicketingApp/TicketingApp.Domain/TicketingApp.Domain.csproj": {
+                "projectPath": "/media/unaj/e28fd9d9-4a7e-4e4d-9144-718f55c8c453/Proyectos/TicketingApp/TicketingApp.Domain/TicketingApp.Domain.csproj"
               }
             }
           }
@@ -219,7 +219,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/home/sof-quiroz/.dotnet/sdk/8.0.420/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/home/unaj/.dotnet/sdk/8.0.420/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import api from "../api/client";
+import Navbar from "../components/Navbar";
 import "./SeatsPage.css";
 
 // Datos de prueba para butacas con disposición de cine (50 butacas)
@@ -122,19 +123,21 @@ export default function SeatsPage() {
   };
 
   return (
-    <div className="seats-container">
-      {/* Header */}
-      <div className="seats-header">
-        <button className="back-btn" onClick={() => navigate('/')}>← Volver</button>
-        <h1>🎬 Selecciona tus Butacas</h1>
-        
-        {/* Temporizador */}
-        <div className="timer" style={{ borderColor: getTimerColor(), color: getTimerColor() }}>
-          <span className="timer-icon">⏱️</span>
-          <span className="timer-text">{formatTime(timeLeft)}</span>
-          <span className="timer-label">Tiempo restante</span>
+    <>
+      <Navbar />
+      <div className="seats-container">
+        {/* Header */}
+        <div className="seats-header">
+          <button className="back-btn" onClick={() => navigate('/')}>← Volver</button>
+          <h1>🎬 Selecciona tus Butacas</h1>
+          
+          {/* Temporizador */}
+          <div className="timer" style={{ borderColor: getTimerColor(), color: getTimerColor() }}>
+            <span className="timer-icon">⏱️</span>
+            <span className="timer-text">{formatTime(timeLeft)}</span>
+            <span className="timer-label">Tiempo restante</span>
+          </div>
         </div>
-      </div>
 
       {/* Leyenda */}
       <div className="legend">
@@ -244,6 +247,7 @@ export default function SeatsPage() {
           </button>
         </div>
       </div>
-    </div>
+      </div>
+    </>
   );
 }

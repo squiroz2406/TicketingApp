@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import api from "../api/client";
+import Navbar from "../components/Navbar";
 import "./EventsPage.css";
 
 export default function SectorsPage() {
@@ -21,12 +22,14 @@ export default function SectorsPage() {
   }, [eventId]);
 
   return (
-    <div className="events-container">
-      <div className="cinema-header">
-        <button className="back-btn" onClick={() => navigate('/')}>← Volver</button>
-        <h1>Selecciona un horario</h1>
-        <p>Elige el sector/hora para la película</p>
-      </div>
+    <>
+      <Navbar />
+      <div className="events-container">
+        <div className="cinema-header">
+          <button className="back-btn" onClick={() => navigate('/')}>← Volver</button>
+          <h1>Selecciona un horario</h1>
+          <p>Elige el sector/hora para la película</p>
+        </div>
 
       {loading ? (
         <p className="no-events">Cargando horarios...</p>
@@ -46,6 +49,7 @@ export default function SectorsPage() {
           ))}
         </div>
       )}
-    </div>
+      </div>
+    </>
   );
 }

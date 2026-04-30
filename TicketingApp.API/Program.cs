@@ -7,6 +7,7 @@ using TicketingApp.Domain.Entities;
 using TicketingApp.Infrastructure.Persistence;
 using TicketingApp.Infrastructure;
 using TicketingApp.Infrastructure.Repositories;
+using TicketingApp.Infrastructure.Services;
 using TicketingApp.Application.Events.Interfaces;
 using TicketingApp.Application.Common.Interfaces;
 using TicketingApp.Application.Seats.Interfaces;
@@ -42,6 +43,9 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateAudience = false
         };
     });
+
+// Servicios
+builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 
 // Repositorios
 builder.Services.AddScoped<IEventRepository, EventRepository>();

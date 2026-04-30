@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import api from "../api/client";
 import { useNavigate } from "react-router-dom";
+import Navbar from "../components/Navbar";
 import "./EventsPage.css";
 
 const POSTER_MAP = {
@@ -192,12 +193,14 @@ export default function EventsPage() {
     : events.filter(e => e.category === selectedCategory);
 
   return (
-    <div className="events-container">
-      {/* Header del Cine */}
-      <div className="cinema-header">
-        <h1>🎬 CinemaTickets</h1>
-        <p>Reserva tus entradas ahora</p>
-      </div>
+    <>
+      <Navbar />
+      <div className="events-container">
+        {/* Header del Cine */}
+        <div className="cinema-header">
+          <h1>🎬 CinemaTickets</h1>
+          <p>Reserva tus entradas ahora</p>
+        </div>
 
       {/* Filtros */}
       <div className="filters-section">
@@ -275,6 +278,7 @@ export default function EventsPage() {
           ))
         )}
       </div>
-    </div>
+      </div>
+    </>
   );
 }
