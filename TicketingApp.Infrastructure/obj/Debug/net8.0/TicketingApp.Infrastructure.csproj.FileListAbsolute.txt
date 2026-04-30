@@ -54,3 +54,5 @@
 /home/sof-quiroz/Escritorio/1er Cuatri 2026/Proyecto Software/TicketingApp/TicketingApp.Infrastructure/obj/Debug/net8.0/TicketingApp.Infrastructure.pdb
 /home/sof-quiroz/Escritorio/1er Cuatri 2026/Proyecto Software/TicketingApp/TicketingApp.Infrastructure/obj/Debug/net8.0/TicketingApp.Infrastructure.genruntimeconfig.cache
 /home/sof-quiroz/Escritorio/1er Cuatri 2026/Proyecto Software/TicketingApp/TicketingApp.Infrastructure/obj/Debug/net8.0/ref/TicketingApp.Infrastructure.dll
+/media/unaj/e28fd9d9-4a7e-4e4d-9144-718f55c8c453/Proyectos/TicketingApp/TicketingApp.Infrastructure/bin/Debug/net8.0/TicketingApp.Infrastructure.runtimeconfig.json
+/media/unaj/e28fd9d9-4a7e-4e4d-9144-718f55c8c453/Proyectos/TicketingApp/TicketingApp.Infrastructure/obj/Debug/net8.0/TicketingApp.Infrastructure.genruntimeconfig.cache
