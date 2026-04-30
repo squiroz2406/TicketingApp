@@ -11,45 +11,114 @@ const POSTER_MAP = {
   "Godzilla x Kong": "https://image.tmdb.org/t/p/w342/z1p34vh7dEOnLDmyCrlUVLuoDzd.jpg",
   "Avatar 3": "https://image.tmdb.org/t/p/w342/t6HIqrRAclMCA60NsSmeqe9RmNV.jpg",
   "The Flash": "https://image.tmdb.org/t/p/w342/4noF7ZJYRLkKw2RJR3fsFmvTCbD.jpg",
-  "Spider-Man: Beyond the Spider-Verse": "https://image.tmdb.org/t/p/w342/qNLhc3Y6INrVfV7Nn7BSXU5vtti.jpg"
+  "Spider-Man: Beyond the Spider-Verse": "https://image.tmdb.org/t/p/w342/qNLhc3Y6INrVfV7Nn7BSXU5vtti.jpg",
+  "The Batman": "https://image.tmdb.org/t/p/w342/74xTEgt7R36Fpooo50r9T25onhq.jpg",
+  "Top Gun: Maverick": "https://image.tmdb.org/t/p/w342/62HCnUTziyWcpDaBO2i1DX17ljH.jpg",
+  "Guardians of the Galaxy Vol. 3": "https://image.tmdb.org/t/p/w342/r2J02Z2OpNTctfOSN1Ydgii51I3.jpg",
+  "Black Panther: Wakanda Forever": "https://image.tmdb.org/t/p/w342/sv1xJUazXeYqALzczSZ3O6nkH75.jpg"
 };
+
+const createMockSectors = (eventId) => [
+  { id: eventId * 10 + 1, name: "14:30", price: 70.0, capacity: 50 },
+  { id: eventId * 10 + 2, name: "20:30", price: 90.0, capacity: 50 }
+];
 
 const MOCK_EVENTS = [
   {
     id: 1,
     nombre: "Dune: Parte Dos",
     fecha: new Date(2026, 4, 15, 20, 30),
-    poster: POSTER_MAP["Dune: Parte Dos"]
+    poster: POSTER_MAP["Dune: Parte Dos"],
+    venue: "Sala 1",
+    sectors: createMockSectors(1)
   },
   {
     id: 2,
     nombre: "Oppenheimer",
     fecha: new Date(2026, 4, 16, 19, 0),
-    poster: POSTER_MAP["Oppenheimer"]
+    poster: POSTER_MAP["Oppenheimer"],
+    venue: "Sala 2",
+    sectors: createMockSectors(2)
   },
   {
     id: 3,
     nombre: "Killers of the Flower Moon",
     fecha: new Date(2026, 4, 17, 21, 0),
-    poster: POSTER_MAP["Killers of the Flower Moon"]
+    poster: POSTER_MAP["Killers of the Flower Moon"],
+    venue: "Sala 3",
+    sectors: createMockSectors(3)
   },
   {
     id: 4,
     nombre: "Barbie",
     fecha: new Date(2026, 4, 18, 18, 30),
-    poster: POSTER_MAP["Barbie"]
+    poster: POSTER_MAP["Barbie"],
+    venue: "Sala 1",
+    sectors: createMockSectors(4)
   },
   {
     id: 5,
     nombre: "Godzilla x Kong",
     fecha: new Date(2026, 4, 19, 20, 0),
-    poster: POSTER_MAP["Godzilla x Kong"]
+    poster: POSTER_MAP["Godzilla x Kong"],
+    venue: "Sala 2",
+    sectors: createMockSectors(5)
   },
   {
     id: 6,
     nombre: "Avatar 3",
     fecha: new Date(2026, 4, 20, 22, 0),
-    poster: POSTER_MAP["Avatar 3"]
+    poster: POSTER_MAP["Avatar 3"],
+    venue: "Sala 4",
+    sectors: createMockSectors(6)
+  },
+  {
+    id: 7,
+    nombre: "The Flash",
+    fecha: new Date(2026, 4, 21, 17, 0),
+    poster: POSTER_MAP["The Flash"],
+    venue: "Sala 5",
+    sectors: createMockSectors(7)
+  },
+  {
+    id: 8,
+    nombre: "Spider-Man: Beyond the Spider-Verse",
+    fecha: new Date(2026, 4, 22, 20, 30),
+    poster: POSTER_MAP["Spider-Man: Beyond the Spider-Verse"],
+    venue: "Sala 3",
+    sectors: createMockSectors(8)
+  },
+  {
+    id: 9,
+    nombre: "The Batman",
+    fecha: new Date(2026, 4, 23, 19, 30),
+    poster: POSTER_MAP["The Batman"],
+    venue: "Sala 6",
+    sectors: createMockSectors(9)
+  },
+  {
+    id: 10,
+    nombre: "Top Gun: Maverick",
+    fecha: new Date(2026, 4, 24, 21, 0),
+    poster: POSTER_MAP["Top Gun: Maverick"],
+    venue: "Sala 7",
+    sectors: createMockSectors(10)
+  },
+  {
+    id: 11,
+    nombre: "Guardians of the Galaxy Vol. 3",
+    fecha: new Date(2026, 4, 25, 18, 0),
+    poster: POSTER_MAP["Guardians of the Galaxy Vol. 3"],
+    venue: "Sala 8",
+    sectors: createMockSectors(11)
+  },
+  {
+    id: 12,
+    nombre: "Black Panther: Wakanda Forever",
+    fecha: new Date(2026, 4, 26, 20, 0),
+    poster: POSTER_MAP["Black Panther: Wakanda Forever"],
+    venue: "Sala 9",
+    sectors: createMockSectors(12)
   }
 ];
 
@@ -60,24 +129,27 @@ export default function EventsPage() {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
+  const createEventFromApi = (event) => ({
+    id: event.id,
+    nombre: event.name,
+    fecha: event.eventDate,
+    poster: getPoster(event.name),
+    venue: event.venue,
+    sectors: event.sectors || []
+  });
+
   useEffect(() => {
-    api.get("/events")
+    api.get("/v1/events")
       .then(res => {
         if (res.data && res.data.length > 0) {
-          setEvents(res.data.map(event => ({
-            id: event.id,
-            nombre: event.name,
-            fecha: event.eventDate,
-            poster: getPoster(event.name),
-            venue: event.venue
-          })));
+          setEvents(res.data.map(createEventFromApi));
         } else {
-          setEvents(MOCK_EVENTS);
+          setEvents([]);
         }
       })
       .catch(err => {
         console.warn("No se pudo conectar al API, usando datos de prueba", err);
-        setEvents(MOCK_EVENTS);
+        setEvents([]);
       })
       .finally(() => setLoading(false));
   }, []);
@@ -134,12 +206,12 @@ export default function EventsPage() {
                 </p>
 
                 <p className="showtimes">
-                  ⏰ 14:30 • 20:30
+                  ⏰ {e.sectors?.map(sector => sector.name).join(' • ') || 'Horario no disponible'}
                 </p>
 
                 <div className="availability">
                   <div className="seats-available">
-                    <span className="available-count">50 butacas</span>
+                    <span className="available-count">{e.sectors?.reduce((total, sector) => total + (sector.capacity ?? 0), 0) || 0} butacas</span>
                     <div className="availability-bar">
                       <div className="filled" style={{ width: '75%' }}></div>
                     </div>

@@ -10,4 +10,6 @@ public class EventDto
     public string Venue { get; set; } = string.Empty;
 
     public string Status { get; set; } = string.Empty;
-}
+
+    public List<SectorDto> Sectors { get; set; } = new();
+} 

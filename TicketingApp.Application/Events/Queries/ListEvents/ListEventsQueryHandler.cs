@@ -23,7 +23,14 @@ public class ListEventsQueryHandler : IRequestHandler<ListEventsQuery, List<Even
             Id = e.Id,
             Name = e.Name,
             EventDate = e.EventDate,
-            Venue = e.Venue
+            Venue = e.Venue,
+            Sectors = e.Sectors?.Select(s => new SectorDto
+            {
+                Id = s.Id,
+                Name = s.Name,
+                Price = s.Price,
+                Capacity = s.Capacity
+            }).ToList() ?? new List<SectorDto>()
         }).ToList();
     }
 }

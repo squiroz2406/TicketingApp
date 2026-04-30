@@ -21,7 +21,9 @@ namespace TicketingApp.Infrastructure.Repositories
 
         public async Task<List<Event>> GetAllAsync()
         {
-            return await _context.Events.ToListAsync();
+            return await _context.Events
+                .Include(e => e.Sectors)
+                .ToListAsync();
         }
 
         public async Task AddAsync(Event evento)
