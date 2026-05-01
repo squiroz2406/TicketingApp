@@ -29,9 +29,8 @@ Una aplicación de ticketing para eventos, construida con .NET 8 (backend) y Rea
    ```
 
 3. Accede a la aplicación:
-   - **Frontend y API**: `http://localhost:8080`
    - **API Swagger**: `http://localhost:8080/swagger`
-   - **SQL Server**: `localhost:1433` (Usuario: sa, Contraseña: YourStrong!Pass123)
+   - **SQL Server**: `localhost:1433` (Usuario: sa, Contraseña: Admin123!)
 
 4. Para detener:
    ```bash
@@ -40,8 +39,9 @@ Una aplicación de ticketing para eventos, construida con .NET 8 (backend) y Rea
 
 ### Puertos Levantados
 
-- **Aplicación (Frontend + API)**: `8080`
+- **Aplicación (API)**: `8080`
 - **SQL Server**: `1433`
+- **Frontend**: `5173`
 
 ## Configuración de la Base de Datos
 
@@ -60,10 +60,6 @@ Antes de ejecutar la aplicación, asegúrate de que las migraciones de Entity Fr
    dotnet ef database update --project TicketingApp.API --startup-project TicketingApp.API
    ```
 
-### En Docker
-
-Las migraciones se aplican automáticamente al iniciar la aplicación (configurado en Program.cs).
-
 ## Pruebas de Endpoints
 
 Después de ejecutar `docker compose up --build -d`, puedes probar los endpoints usando curl, Postman o el navegador.
@@ -75,12 +71,12 @@ Después de ejecutar `docker compose up --build -d`, puedes probar los endpoints
 ### 2. Sembrar datos de prueba
 
 - POST `http://localhost:8080/api/seed/seed`
-  - Esto crea un evento de ejemplo con sectores y asientos.
+  - Esto crea los eventos de ejemplo con sectores y asientos.
 
 ### 3. Listar eventos
 
 - GET `http://localhost:8080/api/v1/events`
-  - Debería devolver el evento creado.
+  - Debería devolver los eventos creados.
 
 ### 4. Ver sectores de un evento
 
@@ -118,8 +114,6 @@ Usa herramientas como Postman para enviar requests con JSON bodies.
    dotnet restore
    dotnet run
    ```
-
-   La API estará en `http://localhost:5290` (ver `launchSettings.json`).
 
 #### Frontend (React)
 
@@ -159,10 +153,3 @@ Consulta Swagger en `/swagger` para más detalles.
 La aplicación usa SQL Server. En Docker, se incluye un contenedor de SQL Server. Para desarrollo local, instala SQL Server y actualiza la cadena de conexión en `appsettings.json`.
 
 Asegúrate de que las migraciones de EF Core estén aplicadas. Si es necesario, ejecuta `dotnet ef database update` en el directorio de la API.
-
-## Contribución
-
-1. Fork el repo
-2. Crea una rama para tu feature
-3. Commit tus cambios
-4. Push y crea un PR
