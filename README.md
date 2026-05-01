@@ -56,9 +56,8 @@ Antes de ejecutar la aplicación, asegúrate de que las migraciones de Entity Fr
 
 2. Desde el directorio raíz del proyecto:
    ```bash
-   dotnet ef migrations add InitialCreate --project TicketingApp.API --startup-project TicketingApp.API
-   dotnet ef database update --project TicketingApp.Infrastructure \
-   --startup-project TicketingApp.API
+   dotnet ef migrations add InitialCreate --project TicketingApp.Infrastructure \ --startup-project TicketingApp.API
+   dotnet ef database update --project TicketingApp.Infrastructure \ --startup-project TicketingApp.API
    ```
 
 ## Pruebas de Endpoints
@@ -71,7 +70,7 @@ Después de ejecutar `docker compose up --build -d`, puedes probar los endpoints
 
 ### 2. Sembrar datos de prueba
 
-- POST `http://localhost:8080/api/seed/seed`
+- POST `http://localhost:8080/api/Seed/seed`
   - Esto crea los eventos de ejemplo con sectores y asientos.
 
 ### 3. Listar eventos
