@@ -57,7 +57,8 @@ Antes de ejecutar la aplicación, asegúrate de que las migraciones de Entity Fr
 2. Desde el directorio raíz del proyecto:
    ```bash
    dotnet ef migrations add InitialCreate --project TicketingApp.API --startup-project TicketingApp.API
-   dotnet ef database update --project TicketingApp.API --startup-project TicketingApp.API
+   dotnet ef database update --project TicketingApp.Infrastructure \
+   --startup-project TicketingApp.API
    ```
 
 ## Pruebas de Endpoints
