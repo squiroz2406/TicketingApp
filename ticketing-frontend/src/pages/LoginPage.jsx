@@ -6,6 +6,8 @@ import './LoginPage.css';
 function LoginPage() {
   const [isLogin, setIsLogin] = useState(true);
   const [loading, setLoading] = useState(false);
+  const [creatingTestUser, setCreatingTestUser] = useState(false);
+  const [testUserMessage, setTestUserMessage] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
@@ -85,6 +87,25 @@ function LoginPage() {
     }
   };
 
+  const handleCreateTestUser = async () => {
+    setError('');
+    setTestUserMessage('');
+    setCreatingTestUser(true);
+
+    try {
+      const result = await authService.createTestUser();
+      if (result.success === false) {
+        setError(result.message || 'No se pudo crear el usuario de prueba');
+      } else {
+        setTestUserMessage(`Usuario de prueba creado: ${result.userName} (${result.userId}). Ingresa con test@example.com / Password123!`);
+      }
+    } catch (err) {
+      setError(err.message || 'Error al crear usuario de prueba');
+    } finally {
+      setCreatingTestUser(false);
+    }
+  };
+
   return (
     <div className="login-container">
       <div className="login-card">
@@ -125,6 +146,18 @@ function LoginPage() {
             <button type="submit" disabled={loading} className="btn-primary">
               {loading ? 'Iniciando sesión...' : 'Iniciar Sesión'}
             </button>
+
+            <button
+              type="button"
+              className="btn-primary"
+              style={{ marginTop: '12px', background: '#4CAF50' }}
+              onClick={handleCreateTestUser}
+              disabled={creatingTestUser}
+            >
+              {creatingTestUser ? 'Creando usuario...' : 'Crear usuario de prueba'}
+            </button>
+
+            {testUserMessage && <p className="success-message" style={{ marginTop: '12px' }}>{testUserMessage}</p>}
 
             <p className="toggle-form">
               ¿No tienes cuenta?{' '}

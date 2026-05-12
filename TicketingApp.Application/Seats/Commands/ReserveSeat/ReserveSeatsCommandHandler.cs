@@ -4,13 +4,14 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using TicketingApp.Application.Common.Interfaces;
 using TicketingApp.Application.Seats.Interfaces;
 using TicketingApp.Domain.Entities;
 
 namespace TicketingApp.Application.Seats.Commands.ReserveSeat;
 
-public class ReserveSeatsCommandHandler : IRequestHandler<ReserveSeatsCommand, bool>
+public class ReserveSeatsCommandHandler : IRequestHandler<ReserveSeatsCommand, ReserveSeatsResult>
 {
     private readonly ISeatRepository _seatRepository;
     private readonly IReservationRepository _reservationRepository;
@@ -29,25 +30,64 @@ public class ReserveSeatsCommandHandler : IRequestHandler<ReserveSeatsCommand, b
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<bool> Handle(ReserveSeatsCommand request, CancellationToken cancellationToken)
+    public async Task<ReserveSeatsResult> Handle(ReserveSeatsCommand request, CancellationToken cancellationToken)
     {
         var seatIds = request.SeatIds?.Distinct().ToList() ?? new List<Guid>();
         if (!seatIds.Any())
         {
-            return false;
+            return new ReserveSeatsResult { Success = false };
         }
 
         var seats = new List<Seat>();
         foreach (var seatId in seatIds)
         {
             var seat = await _seatRepository.GetByIdAsync(seatId);
-            if (seat == null || seat.Status != SeatStatus.Available)
+            if (seat == null)
             {
-                return false;
+                return new ReserveSeatsResult { Success = false };
             }
+
+            if (seat.Status == SeatStatus.Reserved)
+            {
+                var pendingReservations = await _reservationRepository.GetPendingBySeatIdAsync(seatId);
+                var expiredReservations = pendingReservations.Where(r => r.ExpiresAt <= DateTime.UtcNow).ToList();
+
+                foreach (var expiredReservation in expiredReservations)
+                {
+                    expiredReservation.Status = ReservationStatus.Expired;
+                    if (expiredReservation.Seat != null)
+                    {
+                        expiredReservation.Seat.Status = SeatStatus.Available;
+                    }
+
+                    await _reservationRepository.UpdateAsync(expiredReservation);
+
+                    var expiredAudit = new AuditLog
+                    {
+                        UserId = expiredReservation.UserId,
+                        Action = "ExpireReservation",
+                        EntityType = "Reservation",
+                        EntityId = expiredReservation.Id.ToString(),
+                        Details = $"Reservation {expiredReservation.Id} expired and seat {expiredReservation.Seat?.RowIdentifier}{expiredReservation.Seat?.SeatNumber} was released"
+                    };
+                    await _auditLogRepository.AddAsync(expiredAudit);
+                }
+
+                if (expiredReservations.Any())
+                {
+                    seat.Status = SeatStatus.Available;
+                }
+            }
+
+            if (seat.Status != SeatStatus.Available)
+            {
+                return new ReserveSeatsResult { Success = false };
+            }
+
             seats.Add(seat);
         }
 
+        var reservationIds = new List<Guid>();
         foreach (var seat in seats)
         {
             seat.Status = SeatStatus.Reserved;
@@ -57,10 +97,12 @@ public class ReserveSeatsCommandHandler : IRequestHandler<ReserveSeatsCommand, b
             {
                 SeatId = seat.Id,
                 UserId = request.UserId,
-                Status = "Pending",
-                ExpiresAt = DateTime.UtcNow.AddMinutes(15)
+                Status = ReservationStatus.Pending,
+                ReservedAt = DateTime.UtcNow,
+                ExpiresAt = DateTime.UtcNow.AddMinutes(5)
             };
             await _reservationRepository.AddAsync(reservation);
+            reservationIds.Add(reservation.Id);
 
             var auditLog = new AuditLog
             {
@@ -73,7 +115,19 @@ public class ReserveSeatsCommandHandler : IRequestHandler<ReserveSeatsCommand, b
             await _auditLogRepository.AddAsync(auditLog);
         }
 
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
-        return true;
+        try
+        {
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
+            return new ReserveSeatsResult
+            {
+                Success = true,
+                ReservationIds = reservationIds,
+                ReservationId = reservationIds.FirstOrDefault()
+            };
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            return new ReserveSeatsResult { Success = false };
+        }
     }
 }

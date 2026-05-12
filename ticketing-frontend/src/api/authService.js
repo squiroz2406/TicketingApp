@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = '/api';
+const API_BASE_URL = '/api/v1';
 
 export const authService = {
   login: async (email, password) => {
@@ -43,6 +43,20 @@ export const authService = {
   getUser: () => {
     const user = localStorage.getItem('user');
     return user ? JSON.parse(user) : null;
+  },
+
+  getUserId: () => {
+    const user = authService.getUser();
+    return user?.id ?? 0;
+  },
+
+  createTestUser: async () => {
+    try {
+      const response = await axios.post(`${API_BASE_URL}/users/create-test-user`);
+      return response.data;
+    } catch (error) {
+      throw error.response?.data || { success: false, message: 'Error al crear usuario de prueba' };
+    }
   },
 
   isAuthenticated: () => !!localStorage.getItem('token'),

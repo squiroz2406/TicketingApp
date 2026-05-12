@@ -56,6 +56,9 @@ builder.Services.AddScoped<IAuditLogRepository, AuditLogRepository>();
 // UnitOfWork
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
+// Expiration background service
+builder.Services.AddHostedService<ReservationExpirationBackgroundService>();
+
 // Handlers (auto scan)
 builder.Services.Scan(scan => scan
     .FromAssemblyOf<TicketingApp.Application.Events.Queries.ListEvents.ListEventsQueryHandler>()

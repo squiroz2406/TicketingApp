@@ -1,5 +1,6 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using TicketingApp.Application.Seats.Commands.ConfirmReservation;
 using TicketingApp.Application.Seats.Commands.ReserveSeat;
 
 namespace TicketingApp.API.Controllers;
@@ -19,13 +20,28 @@ public class ReservationsController : ControllerBase
     public async Task<IActionResult> Reserve([FromBody] ReserveSeatsCommand command)
     {
         var result = await _mediator.Send(command);
-        if (result)
+        if (result.Success)
         {
-            return Ok(new { message = "Reserva exitosa" });
+            return Ok(new { success = true, reservationId = result.ReservationId });
         }
-        else
+
+        return Conflict(new { success = false, message = "Algunas butacas ya estaban reservadas o no existen" });
+    }
+
+    [HttpPost("{id:guid}/confirm")]
+    public async Task<IActionResult> Confirm([FromRoute] Guid id, [FromBody] ConfirmReservationCommand command)
+    {
+        if (command.ReservationId != id)
         {
-            return Conflict("Algunas butacas ya estaban reservadas o no existen");
+            return BadRequest(new { success = false, message = "Reservation id mismatch" });
         }
+
+        var result = await _mediator.Send(command);
+        if (result.Success)
+        {
+            return Ok(new { success = true });
+        }
+
+        return Conflict(new { success = false, message = result.Message ?? "Conflict confirming reservation" });
     }
 }

@@ -165,7 +165,7 @@ export default function EventsPage() {
   const createEventFromApi = (event) => ({
     id: event.id,
     nombre: event.name,
-    fecha: event.eventDate,
+    fecha: new Date(event.eventDate),
     poster: getPoster(event.name),
     venue: event.venue,
     category: getEventCategory(event.name),

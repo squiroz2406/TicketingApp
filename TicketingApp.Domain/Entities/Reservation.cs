@@ -8,7 +8,7 @@ public class Reservation
     public Guid SeatId { get; set; }
     public Seat Seat { get; set; } = null!;
 
-    public string Status { get; set; } = "Pending";
+    public ReservationStatus Status { get; set; } = ReservationStatus.Pending;
     public DateTime ReservedAt { get; set; } = DateTime.UtcNow;
     public DateTime ExpiresAt { get; set; }
 }

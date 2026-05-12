@@ -9,7 +9,7 @@ using TicketingApp.Infrastructure.Persistence;
 namespace TicketingApp.API.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/v1/seed")]
     public class SeedController : ControllerBase
     {
         private readonly ApplicationDbContext _context;

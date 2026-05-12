@@ -7,7 +7,7 @@ using TicketingApp.Infrastructure.Identity;
 namespace TicketingApp.API.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/v1/users")]
     public class UsersController : ControllerBase
     {
         private readonly UserManager<ApplicationUser> _userManager;

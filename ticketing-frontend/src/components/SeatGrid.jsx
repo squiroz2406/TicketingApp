@@ -5,8 +5,8 @@ export default function SeatGrid({ seats, reload }) {
   const reservar = async (seatId) => {
     try {
       await api.post("/reservations", {
-        seatId: seatId,
-        userId: 1
+        SeatIds: [seatId],
+        UserId: 1
       });
 
       alert("Reserva exitosa");
@@ -21,13 +21,13 @@ export default function SeatGrid({ seats, reload }) {
     }
   };
 
-  const getColor = (estado) => {
-    switch (estado) {
-      case 0: return "green";     // available
-      case 1: return "orange";    // reserved
-      case 2: return "red";       // sold
-      default: return "gray";
-    }
+  const mapStatusToColor = (status) => {
+    if (!status) return "green";
+    const s = status.toLowerCase();
+    if (s === 'available') return "green";
+    if (s === 'reserved') return "orange";
+    if (s === 'sold') return "red";
+    return "gray";
   };
 
   return (
@@ -40,11 +40,11 @@ export default function SeatGrid({ seats, reload }) {
             width: 35,
             height: 35,
             margin: 3,
-            backgroundColor: getColor(seat.estado),
+            backgroundColor: mapStatusToColor(seat.status),
             cursor: "pointer"
           }}
         >
-          {seat.numero}
+          {seat.seatNumber || seat.numero}
         </div>
       ))}
     </div>

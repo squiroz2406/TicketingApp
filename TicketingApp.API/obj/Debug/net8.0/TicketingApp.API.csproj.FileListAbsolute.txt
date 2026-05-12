@@ -497,3 +497,5 @@
 /home/sof-quiroz/Escritorio/1er Cuatri 2026/Proyecto Software/TicketingApp/TicketingApp.API/obj/Debug/net8.0/TicketingApp.API.pdb
 /home/sof-quiroz/Escritorio/1er Cuatri 2026/Proyecto Software/TicketingApp/TicketingApp.API/obj/Debug/net8.0/TicketingApp.API.genruntimeconfig.cache
 /home/sof-quiroz/Escritorio/1er Cuatri 2026/Proyecto Software/TicketingApp/TicketingApp.API/obj/Debug/net8.0/ref/TicketingApp.API.dll
+/home/sof-quiroz/Escritorio/1er Cuatri 2026/Proyecto Software/TicketingApp/TicketingApp.API/bin/Debug/net8.0/Microsoft.Extensions.Diagnostics.Abstractions.dll
+/home/sof-quiroz/Escritorio/1er Cuatri 2026/Proyecto Software/TicketingApp/TicketingApp.API/bin/Debug/net8.0/Microsoft.Extensions.Hosting.Abstractions.dll

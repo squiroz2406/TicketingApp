@@ -1,6 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import api from "../api/client";
+import { authService } from "../api/authService";
+import { reservationService } from "../api/reservationService";
 import Navbar from "../components/Navbar";
 import "./SeatsPage.css";
 
@@ -38,7 +40,21 @@ export default function SeatsPage() {
   const [selectedSeats, setSelectedSeats] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isReserving, setIsReserving] = useState(false);
+  const [isConfirming, setIsConfirming] = useState(false);
+  const [pendingReservation, setPendingReservation] = useState(null);
+  const [reservationMessage, setReservationMessage] = useState('');
+  const [reservationError, setReservationError] = useState('');
   const [timeLeft, setTimeLeft] = useState(300); // 5 minutos = 300 segundos
+  const refreshIntervalRef = useRef(null);
+
+  const mapSeatStatus = (backendStatus) => {
+    if (!backendStatus) return 'available';
+    const status = backendStatus.toLowerCase();
+    if (status === 'available') return 'available';
+    if (status === 'reserved') return 'occupied';
+    if (status === 'sold') return 'occupied';
+    return 'occupied';
+  };
 
   const loadSeats = () => {
     api.get(`/sectors/${sectorId}/seats`)
@@ -49,7 +65,7 @@ export default function SeatsPage() {
             row: seat.row,
             col: seat.col,
             seatNumber: seat.seatNumber,
-            status: seat.status,
+            status: mapSeatStatus(seat.status),
             sectorId: seat.sectorId
           })));
         } else {
@@ -63,14 +79,47 @@ export default function SeatsPage() {
       .finally(() => setLoading(false));
   };
 
-  // Temporizador de 5 minutos
+  // Temporizador de 5 minutos + Auto-refresh de asientos
   useEffect(() => {
     loadSeats();
 
-    const timer = setInterval(() => {
+    // Polling cada 3 segundos para actualizar disponibilidad
+    refreshIntervalRef.current = setInterval(() => {
+      api.get(`/sectors/${sectorId}/seats`)
+        .then(res => {
+          if (res.data && res.data.length > 0) {
+            const updatedSeats = res.data.map(seat => ({
+              id: seat.id,
+              row: seat.row,
+              col: seat.col,
+              seatNumber: seat.seatNumber,
+              status: mapSeatStatus(seat.status),
+              sectorId: seat.sectorId
+            }));
+            
+            // Verificar si algún asiento seleccionado ahora está ocupado
+            const nowOccupied = selectedSeats.filter(selected => 
+              updatedSeats.some(s => s.id === selected.id && s.status === 'occupied')
+            );
+            
+            if (nowOccupied.length > 0) {
+              // Remover asientos que ahora están ocupados de la selección
+              setSelectedSeats(prev => prev.filter(item => 
+                !nowOccupied.some(occ => occ.id === item.id)
+              ));
+              console.warn(`Asiento(s) ${nowOccupied.map(s => s.label).join(', ')} ya fue/fueron reservado(s)`);
+            }
+            
+            setSeats(updatedSeats);
+          }
+        })
+        .catch(err => console.warn("Error al actualizar asientos", err));
+    }, 3000);
+
+    // Timer para el countdown de 5 minutos
+    const countdownTimer = setInterval(() => {
       setTimeLeft(prev => {
         if (prev <= 1) {
-          // Cuando llega a 0, redirigir
           navigate('/');
           return 0;
         }
@@ -78,34 +127,103 @@ export default function SeatsPage() {
       });
     }, 1000);
 
-    return () => clearInterval(timer);
-  }, [sectorId, navigate]);
+    return () => {
+      if (refreshIntervalRef.current) clearInterval(refreshIntervalRef.current);
+      clearInterval(countdownTimer);
+    };
+  }, [sectorId, navigate, selectedSeats]);
 
   const totalPrice = selectedSeats.length * 50;
 
   const reserveSelectedSeats = async () => {
     if (selectedSeats.length === 0) return;
+    setReservationError('');
+    setReservationMessage('');
+
+    const user = authService.getUser();
+    if (!user?.id || user.id === 0) {
+      setReservationError('Usuario no autenticado o userId inválido. Inicia sesión de nuevo.');
+      return;
+    }
+
+    // Validar que los asientos siguen disponibles antes de reservar
+    const currentSeats = new Map(seats.map(s => [s.id, s]));
+    const unavailable = selectedSeats.filter(selected => {
+      const current = currentSeats.get(selected.id);
+      return current && current.status === 'occupied';
+    });
+
+    if (unavailable.length > 0) {
+      setReservationError(`Los asientos ${unavailable.map(s => s.label).join(', ')} ya fueron reservados.`);
+      setSelectedSeats([]);
+      return;
+    }
 
     setIsReserving(true);
     try {
       const seatIds = selectedSeats.map(seat => seat.id);
-      await api.post("/reservations", {
-        seatIds,
-        userId: 1
-      });
+      const response = await reservationService.createReservation(seatIds, user.id);
 
-      alert("Reserva exitosa");
-      setSelectedSeats([]);
-      navigate('/');
+      if (response.success) {
+        setPendingReservation({
+          id: response.reservationId,
+          seatLabels: selectedSeats.map(seat => seat.label),
+          totalPrice,
+        });
+        setReservationMessage(`Reserva creada correctamente. Reserva ID: ${response.reservationId}`);
+        setSelectedSeats([]);
+      } else {
+        setReservationError(response.message || 'No se pudo crear la reserva.');
+      }
     } catch (err) {
       if (err.response?.status === 409) {
-        alert("Algunas butacas ya están reservadas o no existen");
+        setReservationError('Conflicto: Algunas butacas ya estaban reservadas. Intenta de nuevo.');
       } else {
-        alert("Error al reservar las butacas");
+        setReservationError(err.response?.data?.message || 'Error al reservar las butacas.');
       }
       loadSeats();
     } finally {
       setIsReserving(false);
+    }
+  };
+
+  const confirmPendingReservation = async () => {
+    if (!pendingReservation?.id) {
+      setReservationError('No hay reserva pendiente para confirmar.');
+      return;
+    }
+
+    const user = authService.getUser();
+    if (!user?.id || user.id === 0) {
+      setReservationError('Usuario no autenticado o userId inválido. Inicia sesión de nuevo.');
+      return;
+    }
+
+    setReservationError('');
+    setReservationMessage('');
+    setIsConfirming(true);
+
+    try {
+      const response = await reservationService.confirmReservation(pendingReservation.id, user.id);
+      if (response.success) {
+        setReservationMessage('✅ Reserva confirmada correctamente.');
+        setPendingReservation(null);
+        setSelectedSeats([]);
+        loadSeats();
+      } else {
+        setReservationError(response.message || 'No se pudo confirmar la reserva.');
+      }
+    } catch (err) {
+      if (err.response?.status === 409) {
+        setReservationError(err.response?.data?.message || 'Reserva no pudo confirmarse, probablemente ya expiró.');
+      } else if (err.response?.status === 400) {
+        setReservationError(err.response?.data?.message || 'ID de reserva inválido.');
+      } else {
+        setReservationError(err.response?.data?.message || 'Error al confirmar la reserva.');
+      }
+      loadSeats();
+    } finally {
+      setIsConfirming(false);
     }
   };
 
@@ -187,6 +305,9 @@ export default function SeatsPage() {
                                 ? prev.filter(item => item.id !== seat.id)
                                 : [...prev, { id: seat.id, label: seat.seatNumber }]
                             );
+                          } else if (seat.status === 'occupied') {
+                            // Mostrar que el asiento ahora está ocupado
+                            alert(`❌ Este asiento (${seat.seatNumber}) ya fue reservado`);
                           }
                         }}
                         disabled={seat.status === 'occupied'}
@@ -216,6 +337,8 @@ export default function SeatsPage() {
                                 ? prev.filter(item => item.id !== seat.id)
                                 : [...prev, { id: seat.id, label: seat.seatNumber }]
                             );
+                          } else if (seat.status === 'occupied') {
+                            alert(`❌ Este asiento (${seat.seatNumber}) ya fue reservado`);
                           }
                         }}
                         disabled={seat.status === 'occupied'}
@@ -241,10 +364,39 @@ export default function SeatsPage() {
             <p>Butacas seleccionadas: <strong>{selectedSeats.length}</strong></p>
             <p>Butacas: <strong>{selectedSeats.map(seat => seat.label).join(', ') || 'Ninguna'}</strong></p>
             <p>Total a pagar: <strong>${totalPrice.toFixed(2)}</strong></p>
+            {pendingReservation && (
+              <div style={{ marginTop: '12px', color: '#333' }}>
+                <p><strong>Reserva pendiente:</strong> {pendingReservation.id}</p>
+                <p><strong>Butacas reservadas:</strong> {pendingReservation.seatLabels.join(', ')}</p>
+              </div>
+            )}
+            {reservationMessage && (
+              <p style={{ marginTop: '12px', color: '#22a55d' }}>{reservationMessage}</p>
+            )}
+            {reservationError && (
+              <p style={{ marginTop: '12px', color: '#f44336' }}>{reservationError}</p>
+            )}
           </div>
-          <button className="confirm-btn" disabled={selectedSeats.length === 0 || isReserving} onClick={reserveSelectedSeats}>
-            {isReserving ? 'Reservando...' : `Confirmar Compra ($${totalPrice.toFixed(2)})`}
-          </button>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', width: '100%', maxWidth: '320px' }}>
+            <button
+              className="confirm-btn"
+              disabled={selectedSeats.length === 0 || isReserving || !!pendingReservation}
+              onClick={reserveSelectedSeats}
+            >
+              {isReserving ? 'Reservando...' : `Reservar butacas ($${totalPrice.toFixed(2)})`}
+            </button>
+
+            {pendingReservation && (
+              <button
+                className="confirm-btn"
+                disabled={isConfirming}
+                onClick={confirmPendingReservation}
+                style={{ background: '#f5576c' }}
+              >
+                {isConfirming ? 'Confirmando...' : 'Confirmar reserva'}
+              </button>
+            )}
+          </div>
         </div>
       </div>
       </div>

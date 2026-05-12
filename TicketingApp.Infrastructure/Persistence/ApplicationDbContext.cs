@@ -119,7 +119,10 @@ public class ApplicationDbContext
 
         modelBuilder.Entity<Reservation>()
             .Property(r => r.Status)
-            .HasColumnName("Status");
+            .HasColumnName("Status")
+            .HasConversion(new EnumToStringConverter<ReservationStatus>())
+            .HasMaxLength(20)
+            .IsRequired();
 
         modelBuilder.Entity<Reservation>()
             .Property(r => r.ReservedAt)

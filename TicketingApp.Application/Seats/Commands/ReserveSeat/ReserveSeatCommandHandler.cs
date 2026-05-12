@@ -43,7 +43,7 @@ public class ReserveSeatCommandHandler : IRequestHandler<ReserveSeatCommand, boo
         {
             SeatId = request.SeatId,
             UserId = request.UserId,
-            Status = "Pending",
+            Status = ReservationStatus.Pending,
             ExpiresAt = DateTime.UtcNow.AddMinutes(15) // 15 minutes to confirm
         };
         await _reservationRepository.AddAsync(reservation);

@@ -112,6 +112,15 @@
   animation: shake 0.3s ease-in-out;
 }
 
+.success-message {
+  background: #e6ffed;
+  border-left: 4px solid #22a55d;
+  color: #166534;
+  padding: 12px 15px;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
 @keyframes shake {
   0%, 100% {
     transform: translateX(0);

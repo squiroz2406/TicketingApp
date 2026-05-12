@@ -35,6 +35,14 @@ namespace TicketingApp.Infrastructure.Repositories
                 .ToListAsync();
         }
 
+        public async Task<List<Reservation>> GetPendingBySeatIdAsync(Guid seatId)
+        {
+            return await _context.Reservations
+                .Where(r => r.SeatId == seatId && r.Status == ReservationStatus.Pending)
+                .Include(r => r.Seat)
+                .ToListAsync();
+        }
+
         public async Task AddAsync(Reservation reservation)
         {
             await _context.Reservations.AddAsync(reservation);
