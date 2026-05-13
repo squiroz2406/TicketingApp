@@ -239,7 +239,7 @@ export default function EventsPage() {
             <Row className="g-4">
               {filteredEvents.map(event => (
                 <Col key={event.id} md={6} lg={4} xl={3} className="mb-4">
-                  <div className="movie-card" onClick={() => navigate(`/events/${event.id}/sectors`)}>
+                  <div className="movie-card" onClick={() => navigate(`/events/${event.id}/sectors?movie=${encodeURIComponent(event.nombre)}`)}>
                     {/* Poster */}
                     <div className="movie-poster-container">
                       <img 

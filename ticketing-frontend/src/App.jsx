@@ -3,6 +3,7 @@ import EventsPage from './pages/EventsPage';
 import LoginPage from './pages/LoginPage';
 import SectorsPage from './pages/SectorsPage';
 import SeatsPage from './pages/SeatsPage';
+import PurchaseHistoryPage from './pages/PurchaseHistoryPage';
 import PrivateRoute from './components/PrivateRoute';
 import './App.css';
 
@@ -33,6 +34,14 @@ function App() {
             element={
               <PrivateRoute>
                 <SeatsPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/purchase-history"
+            element={
+              <PrivateRoute>
+                <PurchaseHistoryPage />
               </PrivateRoute>
             }
           />

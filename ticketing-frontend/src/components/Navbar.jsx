@@ -1,22 +1,50 @@
 import { useNavigate } from 'react-router-dom';
 import { authService } from '../api/authService';
-import { useState } from 'react';
+import { purchaseService } from '../api/purchaseService';
+import { useState, useEffect } from 'react';
 import { Navbar as BootstrapNavbar, Nav, Container, Dropdown } from 'react-bootstrap';
 import './Navbar.css';
 
 function Navbar() {
   const navigate = useNavigate();
   const user = authService.getUser();
-  const [purchaseHistory] = useState([
-    { id: 1, movie: 'Dune: Parte Dos', date: '2026-05-15', seats: 'A1, A2', price: '$100' },
-    { id: 2, movie: 'Oppenheimer', date: '2026-05-16', seats: 'B5', price: '$50' },
-    { id: 3, movie: 'Avatar 3', date: '2026-05-20', seats: 'C3, C4, C5', price: '$150' },
-  ]);
+  const [purchaseHistory, setPurchaseHistory] = useState([]);
+
+  useEffect(() => {
+    if (user?.id) {
+      loadPurchaseHistory();
+    }
+  }, [user?.id]);
+
+  const loadPurchaseHistory = () => {
+    try {
+      const purchases = purchaseService.getLatestPurchases(user.id, 3);
+      setPurchaseHistory(purchases);
+    } catch (error) {
+      console.warn("Error loading purchases:", error);
+      setPurchaseHistory([]);
+    }
+  };
 
   const handleLogout = () => {
     authService.logout();
     navigate('/login');
   };
+
+  const handleViewAllPurchases = () => {
+    navigate('/purchase-history');
+  };
+
+  // Re-load purchases when the page comes into focus (for real-time updates)
+  useEffect(() => {
+    const handleFocus = () => {
+      if (user?.id) {
+        loadPurchaseHistory();
+      }
+    };
+    window.addEventListener('focus', handleFocus);
+    return () => window.removeEventListener('focus', handleFocus);
+  }, [user?.id]);
 
   return (
     <BootstrapNavbar bg="dark" expand="lg" sticky="top" className="navbar-custom">
@@ -37,7 +65,7 @@ function Navbar() {
                     id="dropdown-history"
                     className="dropdown-toggle-custom"
                   >
-                    <i className="bi bi-ticket-perforated"></i> Mi Historial
+                    <i className="bi bi-ticket-perforated"></i> Mis compras
                   </Dropdown.Toggle>
 
                   <Dropdown.Menu className="dropdown-menu-dark dropdown-custom">
@@ -52,9 +80,10 @@ function Navbar() {
                           <div className="purchase-details">
                             <div className="movie-title">{purchase.movie}</div>
                             <div className="purchase-info">
+                              <small className="time">🕐 {purchase.time || 'Sin horario'}</small>
                               <small className="date">📅 {purchase.date}</small>
                               <small className="seats">🎫 {purchase.seats}</small>
-                              <small className="price text-warning">{purchase.price}</small>
+                              <small className="price text-warning">${purchase.price}</small>
                             </div>
                           </div>
                         </Dropdown.Item>
@@ -64,7 +93,7 @@ function Navbar() {
                     )}
                     
                     <Dropdown.Divider />
-                    <Dropdown.Item href="#/my-tickets" className="view-all">
+                    <Dropdown.Item onClick={handleViewAllPurchases} className="view-all">
                       Ver todas las compras →
                     </Dropdown.Item>
                   </Dropdown.Menu>

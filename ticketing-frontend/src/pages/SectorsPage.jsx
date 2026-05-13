@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import api from "../api/client";
 import Navbar from "../components/Navbar";
 import "./EventsPage.css";
 
 export default function SectorsPage() {
   const { eventId } = useParams();
+  const [searchParams] = useSearchParams();
+  const movieName = searchParams.get('movie') || 'Película';
   const [sectors, setSectors] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -51,7 +53,7 @@ export default function SectorsPage() {
         <div style={{ padding: '2rem' }}>
           <div className="sectors-grid">
             {sectors.map(sector => (
-              <div key={sector.id} className="sector-card" onClick={() => navigate(`/sectors/${sector.id}/seats`)}>
+              <div key={sector.id} className="sector-card" onClick={() => navigate(`/sectors/${sector.id}/seats?movie=${encodeURIComponent(movieName)}&time=${encodeURIComponent(sector.name)}`)}>
                 <div className="sector-header">
                   <h3 className="sector-name">{sector.name}</h3>
                   <div className="sector-price-badge">${sector.price.toFixed(2)}</div>

@@ -1,0 +1,245 @@
+.purchase-history-page {
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--dark-bg) 100%);
+  min-height: 100vh;
+  padding-top: 40px;
+  color: var(--light-text);
+}
+
+.history-header {
+  position: relative;
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.back-btn {
+  position: absolute;
+  left: 0;
+  top: 0;
+  background: transparent;
+  border: none;
+  color: var(--accent-color);
+  font-size: 16px;
+  cursor: pointer;
+  padding: 8px 16px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.back-btn:hover {
+  background: rgba(255, 193, 7, 0.2);
+  transform: translateX(-4px);
+}
+
+.history-header h1 {
+  font-size: 3em;
+  background: linear-gradient(135deg, var(--accent-color), var(--secondary-color));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 16px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.user-info {
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0;
+  font-size: 14px;
+}
+
+.user-info strong {
+  color: var(--accent-color);
+}
+
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  background: rgba(26, 26, 46, 0.6);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 193, 7, 0.2);
+}
+
+.no-purchases {
+  font-size: 18px;
+  margin-bottom: 30px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.purchases-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 24px;
+  margin-top: 30px;
+}
+
+.purchase-card {
+  background: rgba(26, 26, 46, 0.6);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 193, 7, 0.15);
+  border-radius: 16px;
+  color: var(--light-text);
+  transition: all 0.3s ease;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.purchase-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(255, 193, 7, 0.4);
+  box-shadow: 0 12px 48px rgba(255, 193, 7, 0.15);
+}
+
+.purchase-card .card-body {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.purchase-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  flex: 1;
+}
+
+.movie-info {
+  flex: 1;
+  margin-right: 16px;
+}
+
+.movie-name {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 12px 0;
+  color: var(--accent-color);
+  line-height: 1.4;
+}
+
+.purchase-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.meta-badge {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.8);
+  display: block;
+}
+
+.meta-badge.date {
+  color: #90CAF9;
+}
+
+.meta-badge.seats {
+  color: #81C784;
+}
+
+.price-section {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.price-label {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.6);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 4px;
+}
+
+.price-amount {
+  font-size: 24px;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--accent-color), #FFD54F);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.card-footer {
+  display: flex;
+  gap: 12px;
+  margin-top: auto;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 193, 7, 0.15);
+}
+
+.details-btn,
+.download-btn {
+  flex: 1;
+  font-size: 12px;
+  padding: 8px 12px;
+  transition: all 0.3s ease;
+  border-radius: 8px;
+}
+
+.details-btn:hover,
+.download-btn:hover {
+  transform: scale(1.05);
+}
+
+.details-btn {
+  border-color: var(--accent-color) !important;
+  color: var(--accent-color) !important;
+}
+
+.details-btn:hover {
+  background: rgba(255, 193, 7, 0.1) !important;
+}
+
+.download-btn {
+  border-color: rgba(255, 255, 255, 0.3) !important;
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+.download-btn:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .purchase-card .card-body {
+    padding: 16px;
+  }
+
+  .history-header h1 {
+    font-size: 2em;
+  }
+
+  .purchase-content {
+    flex-direction: column;
+  }
+
+  .movie-info {
+    margin-right: 0;
+    margin-bottom: 16px;
+  }
+
+  .price-section {
+    align-items: flex-start;
+  }
+
+  .purchases-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .back-btn {
+    position: relative;
+    margin-bottom: 16px;
+    width: 100%;
+  }
+
+  .history-header {
+    text-align: left;
+  }
+
+  .history-header h1 {
+    margin-top: 0;
+  }
+}

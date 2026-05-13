@@ -1,8 +1,9 @@
 import { useEffect, useState, useRef } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import api from "../api/client";
 import { authService } from "../api/authService";
 import { reservationService } from "../api/reservationService";
+import { purchaseService } from "../api/purchaseService";
 import Navbar from "../components/Navbar";
 import "./SeatsPage.css";
 
@@ -35,6 +36,13 @@ const generateMockSeats = (eventId) => {
 
 export default function SeatsPage() {
   const { sectorId } = useParams();
+  const [searchParams] = useSearchParams();
+  const movieName = searchParams.get('movie') || 'Película';
+  const timeSlot = searchParams.get('time') || 'Sin horario';
+  
+  // Debug
+  console.log('SeatsPage - movieName:', movieName, 'timeSlot:', timeSlot);
+  
   const navigate = useNavigate();
   const [seats, setSeats] = useState([]);
   const [selectedSeats, setSelectedSeats] = useState([]);
@@ -206,6 +214,18 @@ export default function SeatsPage() {
     try {
       const response = await reservationService.confirmReservation(pendingReservation.id, user.id);
       if (response.success) {
+        // Save the purchase to localStorage with the movie name and time slot
+        const purchase = {
+          id: pendingReservation.id,
+          movie: movieName,
+          time: timeSlot,
+          date: new Date().toISOString().split('T')[0],
+          seats: pendingReservation.seatLabels.join(', '),
+          price: pendingReservation.seatLabels.length * 50, // $50 per seat
+        };
+        console.log('Saving purchase:', purchase);
+        purchaseService.savePurchase(user.id, purchase);
+
         setReservationMessage('✅ Reserva confirmada correctamente.');
         setPendingReservation(null);
         setSelectedSeats([]);
