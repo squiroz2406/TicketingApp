@@ -296,7 +296,7 @@ export default function SeatsPage() {
                 
                 {/* Lado izquierdo del pasillo (5 asientos) */}
                 <div className="seats-section left">
-                  {seats.filter(s => s.row === row && s.col <= 5).map(seat => {
+                  {seats.filter(s => s.row === row && s.col <= 5).sort((a, b) => a.col - b.col).map(seat => {
                     const isSelected = selectedSeats.some(item => item.id === seat.id);
                     return (
                       <button
@@ -328,7 +328,7 @@ export default function SeatsPage() {
 
                 {/* Lado derecho del pasillo (5 asientos) */}
                 <div className="seats-section right">
-                  {seats.filter(s => s.row === row && s.col > 5).map(seat => {
+                  {seats.filter(s => s.row === row && s.col > 5).sort((a, b) => a.col - b.col).map(seat => {
                     const isSelected = selectedSeats.some(item => item.id === seat.id);
                     return (
                       <button
