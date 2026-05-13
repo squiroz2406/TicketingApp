@@ -38,8 +38,9 @@ const CATEGORY_MAP = {
 const CATEGORIES = ["Todos", "Acción", "Drama", "Comedia"];
 
 const createMockSectors = (eventId) => [
-  { id: eventId * 10 + 1, name: "14:30", price: 70.0, capacity: 50 },
-  { id: eventId * 10 + 2, name: "20:30", price: 90.0, capacity: 50 }
+  { id: eventId * 10 + 1, name: "14:30", price: 50.0, capacity: 50 },
+  { id: eventId * 10 + 2, name: "18:00", price: 50.0, capacity: 50 },
+  { id: eventId * 10 + 3, name: "21:00", price: 50.0, capacity: 50 }
 ];
 
 const MOCK_EVENTS = [
@@ -265,27 +266,6 @@ export default function EventsPage() {
                         </Badge>
                       </div>
 
-                      <div className="movie-meta">
-                        <p className="meta-item">
-                          <span className="meta-icon">📅</span>
-                          <span className="meta-text">
-                            {new Date(event.fecha).toLocaleDateString('es-ES', { 
-                              month: 'short', 
-                              day: 'numeric'
-                            })}
-                          </span>
-                        </p>
-                        <p className="meta-item">
-                          <span className="meta-icon">🕒</span>
-                          <span className="meta-text">
-                            {new Date(event.fecha).toLocaleTimeString('es-ES', { 
-                              hour: '2-digit', 
-                              minute: '2-digit'
-                            })}
-                          </span>
-                        </p>
-                      </div>
-
                       {/* Barra de disponibilidad */}
                       <div className="availability-section">
                         <div className="availability-header">
@@ -316,8 +296,8 @@ export default function EventsPage() {
                       <div className="showtimes-section mt-3">
                         <small className="showtimes-label">Horarios:</small>
                         <div className="showtimes-list">
-                          {event.sectors?.slice(0, 2).map((sector, idx) => (
-                            <span key={idx} className="showtime-badge">${sector.price}</span>
+                          {event.sectors?.map((sector, idx) => (
+                            <span key={idx} className="showtime-badge">{sector.name} - ${sector.price}</span>
                           ))}
                         </div>
                       </div>

@@ -100,7 +100,7 @@ namespace TicketingApp.API.Controllers
                     {
                         Name = h,
                         EventId = ev.Id,
-                        Price = 100,
+                        Price = 50,
                         Capacity = 50
                     });
                 }

@@ -8,9 +8,9 @@ function Navbar() {
   const navigate = useNavigate();
   const user = authService.getUser();
   const [purchaseHistory] = useState([
-    { id: 1, movie: 'Dune: Parte Dos', date: '2026-05-15', seats: 'A1, A2', price: '$180' },
-    { id: 2, movie: 'Oppenheimer', date: '2026-05-16', seats: 'B5', price: '$90' },
-    { id: 3, movie: 'Avatar 3', date: '2026-05-20', seats: 'C3, C4, C5', price: '$270' },
+    { id: 1, movie: 'Dune: Parte Dos', date: '2026-05-15', seats: 'A1, A2', price: '$100' },
+    { id: 2, movie: 'Oppenheimer', date: '2026-05-16', seats: 'B5', price: '$50' },
+    { id: 3, movie: 'Avatar 3', date: '2026-05-20', seats: 'C3, C4, C5', price: '$150' },
   ]);
 
   const handleLogout = () => {
