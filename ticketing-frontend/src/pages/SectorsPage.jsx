@@ -25,28 +25,50 @@ export default function SectorsPage() {
     <>
       <Navbar />
       <div className="events-container">
-        <div className="cinema-header">
+        {/* Hero Section */}
+        <div className="cinema-hero">
+          <div className="hero-overlay"></div>
+          <div className="hero-content">
+            <h1 className="hero-title">Selecciona tu Horario</h1>
+            <p className="hero-subtitle">Elige el sector y hora perfecta para disfrutar la película</p>
+          </div>
+        </div>
+
+        {/* Back Button */}
+        <div style={{ position: 'relative', marginTop: '-60px', paddingLeft: '2rem', zIndex: 10 }}>
           <button className="back-btn" onClick={() => navigate('/')}>← Volver</button>
-          <h1>Selecciona un horario</h1>
-          <p>Elige el sector/hora para la película</p>
         </div>
 
       {loading ? (
-        <p className="no-events">Cargando horarios...</p>
+        <div style={{ textAlign: 'center', padding: '3rem', color: '#999' }}>
+          <p style={{ fontSize: '1.1rem' }}>Cargando horarios...</p>
+        </div>
       ) : sectors.length === 0 ? (
-        <p className="no-events">No hay horarios disponibles para este evento</p>
+        <div style={{ textAlign: 'center', padding: '3rem', color: '#999' }}>
+          <p style={{ fontSize: '1.1rem' }}>No hay horarios disponibles para este evento</p>
+        </div>
       ) : (
-        <div className="events-grid">
-          {sectors.map(sector => (
-            <div key={sector.id} className="event-card" onClick={() => navigate(`/sectors/${sector.id}/seats`)}>
-              <div className="movie-info">
-                <h3>Horario: {sector.name}</h3>
-                <p>Precio: ${sector.price.toFixed(2)}</p>
-                <p>Capacidad: {sector.capacity} butacas</p>
-                <button className="buy-btn">Ver butacas</button>
+        <div style={{ padding: '2rem' }}>
+          <div className="sectors-grid">
+            {sectors.map(sector => (
+              <div key={sector.id} className="sector-card" onClick={() => navigate(`/sectors/${sector.id}/seats`)}>
+                <div className="sector-header">
+                  <h3 className="sector-name">{sector.name}</h3>
+                  <div className="sector-price-badge">${sector.price.toFixed(2)}</div>
+                </div>
+                <div className="sector-details">
+                  <div className="detail-item">
+                    <span className="detail-icon">🪑</span>
+                    <div>
+                      <p className="detail-label">Capacidad</p>
+                      <p className="detail-value">{sector.capacity} butacas</p>
+                    </div>
+                  </div>
+                </div>
+                <button className="sector-button">Ver Disponibilidad</button>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       )}
       </div>

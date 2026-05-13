@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { authService } from '../api/authService';
+import { Container, Row, Col, Form, Button, Alert, Spinner } from 'react-bootstrap';
 import './LoginPage.css';
 
 function LoginPage() {
@@ -107,148 +108,207 @@ function LoginPage() {
   };
 
   return (
-    <div className="login-container">
-      <div className="login-card">
-        <h1 className="login-title">TicketingApp</h1>
-        
-        {error && <div className="error-message">{error}</div>}
-
-        {isLogin ? (
-          <form onSubmit={handleLoginSubmit} className="login-form">
-            <h2>Iniciar Sesión</h2>
-            
-            <div className="form-group">
-              <label htmlFor="email">Correo Electrónico</label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={loginForm.email}
-                onChange={handleLoginChange}
-                required
-                placeholder="tu@email.com"
-              />
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="password">Contraseña</label>
-              <input
-                type="password"
-                id="password"
-                name="password"
-                value={loginForm.password}
-                onChange={handleLoginChange}
-                required
-                placeholder="Tu contraseña"
-              />
-            </div>
-
-            <button type="submit" disabled={loading} className="btn-primary">
-              {loading ? 'Iniciando sesión...' : 'Iniciar Sesión'}
-            </button>
-
-            <button
-              type="button"
-              className="btn-primary"
-              style={{ marginTop: '12px', background: '#4CAF50' }}
-              onClick={handleCreateTestUser}
-              disabled={creatingTestUser}
-            >
-              {creatingTestUser ? 'Creando usuario...' : 'Crear usuario de prueba'}
-            </button>
-
-            {testUserMessage && <p className="success-message" style={{ marginTop: '12px' }}>{testUserMessage}</p>}
-
-            <p className="toggle-form">
-              ¿No tienes cuenta?{' '}
-              <button
-                type="button"
-                onClick={() => {
-                  setIsLogin(false);
-                  setError('');
-                }}
-                className="link-button"
-              >
-                Regístrate aquí
-              </button>
-            </p>
-          </form>
-        ) : (
-          <form onSubmit={handleRegisterSubmit} className="login-form">
-            <h2>Registrarse</h2>
-
-            <div className="form-group">
-              <label htmlFor="userName">Nombre de Usuario</label>
-              <input
-                type="text"
-                id="userName"
-                name="userName"
-                value={registerForm.userName}
-                onChange={handleRegisterChange}
-                required
-                placeholder="Tu nombre de usuario"
-              />
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="register-email">Correo Electrónico</label>
-              <input
-                type="email"
-                id="register-email"
-                name="email"
-                value={registerForm.email}
-                onChange={handleRegisterChange}
-                required
-                placeholder="tu@email.com"
-              />
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="register-password">Contraseña</label>
-              <input
-                type="password"
-                id="register-password"
-                name="password"
-                value={registerForm.password}
-                onChange={handleRegisterChange}
-                required
-                placeholder="Crea una contraseña"
-              />
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="confirmPassword">Confirmar Contraseña</label>
-              <input
-                type="password"
-                id="confirmPassword"
-                name="confirmPassword"
-                value={registerForm.confirmPassword}
-                onChange={handleRegisterChange}
-                required
-                placeholder="Confirma tu contraseña"
-              />
-            </div>
-
-            <button type="submit" disabled={loading} className="btn-primary">
-              {loading ? 'Registrando...' : 'Registrarse'}
-            </button>
-
-            <p className="toggle-form">
-              ¿Ya tienes cuenta?{' '}
-              <button
-                type="button"
-                onClick={() => {
-                  setIsLogin(true);
-                  setError('');
-                }}
-                className="link-button"
-              >
-                Inicia sesión aquí
-              </button>
-            </p>
-          </form>
-        )}
+    <div className="login-page">
+      {/* Background elements */}
+      <div className="login-background">
+        <div className="cinema-reel-1"></div>
+        <div className="cinema-reel-2"></div>
+        <div className="cinema-reel-3"></div>
       </div>
+
+      <Container className="login-container">
+        <Row className="align-items-center justify-content-center min-vh-100">
+          <Col md={8} lg={6} xl={5}>
+            <div className="login-card">
+              {/* Logo/Header */}
+              <div className="login-header">
+                <div className="logo-cinema">🎬</div>
+                <h1 className="cinema-name">CineMark Pro</h1>
+                <p className="tagline">Tu cine favorito en línea</p>
+              </div>
+
+              {error && (
+                <Alert variant="danger" className="auth-alert" dismissible onClose={() => setError('')}>
+                  <i className="bi bi-exclamation-circle"></i> {error}
+                </Alert>
+              )}
+
+              {testUserMessage && (
+                <Alert variant="success" className="auth-alert">
+                  <i className="bi bi-check-circle"></i> {testUserMessage}
+                </Alert>
+              )}
+
+              {isLogin ? (
+                <Form onSubmit={handleLoginSubmit} className="auth-form">
+                  <h2 className="form-title">Iniciar Sesión</h2>
+
+                  <Form.Group className="form-group-custom mb-3">
+                    <Form.Label>Correo Electrónico</Form.Label>
+                    <Form.Control
+                      type="email"
+                      name="email"
+                      value={loginForm.email}
+                      onChange={handleLoginChange}
+                      required
+                      placeholder="tu@email.com"
+                      className="form-control-custom"
+                    />
+                  </Form.Group>
+
+                  <Form.Group className="form-group-custom mb-4">
+                    <Form.Label>Contraseña</Form.Label>
+                    <Form.Control
+                      type="password"
+                      name="password"
+                      value={loginForm.password}
+                      onChange={handleLoginChange}
+                      required
+                      placeholder="Tu contraseña"
+                      className="form-control-custom"
+                    />
+                  </Form.Group>
+
+                  <Button
+                    type="submit"
+                    disabled={loading}
+                    className="btn-auth-primary w-100 mb-2"
+                  >
+                    {loading ? (
+                      <>
+                        <Spinner animation="border" size="sm" className="me-2" />
+                        Iniciando sesión...
+                      </>
+                    ) : (
+                      '→ Iniciar Sesión'
+                    )}
+                  </Button>
+
+                  <Button
+                    type="button"
+                    className="btn-auth-secondary w-100 mb-3"
+                    onClick={handleCreateTestUser}
+                    disabled={creatingTestUser}
+                  >
+                    {creatingTestUser ? (
+                      <>
+                        <Spinner animation="border" size="sm" className="me-2" />
+                        Creando usuario...
+                      </>
+                    ) : (
+                      '✓ Crear usuario de prueba'
+                    )}
+                  </Button>
+
+                  <div className="toggle-form-section">
+                    <p className="toggle-text">¿No tienes cuenta?</p>
+                    <Button
+                      type="button"
+                      onClick={() => {
+                        setIsLogin(false);
+                        setError('');
+                      }}
+                      className="btn-link-auth"
+                    >
+                      Regístrate aquí →
+                    </Button>
+                  </div>
+                </Form>
+              ) : (
+                <Form onSubmit={handleRegisterSubmit} className="auth-form">
+                  <h2 className="form-title">Crear Cuenta</h2>
+
+                  <Form.Group className="form-group-custom mb-3">
+                    <Form.Label>Nombre de Usuario</Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="userName"
+                      value={registerForm.userName}
+                      onChange={handleRegisterChange}
+                      required
+                      placeholder="Tu nombre de usuario"
+                      className="form-control-custom"
+                    />
+                  </Form.Group>
+
+                  <Form.Group className="form-group-custom mb-3">
+                    <Form.Label>Correo Electrónico</Form.Label>
+                    <Form.Control
+                      type="email"
+                      name="email"
+                      value={registerForm.email}
+                      onChange={handleRegisterChange}
+                      required
+                      placeholder="tu@email.com"
+                      className="form-control-custom"
+                    />
+                  </Form.Group>
+
+                  <Form.Group className="form-group-custom mb-3">
+                    <Form.Label>Contraseña</Form.Label>
+                    <Form.Control
+                      type="password"
+                      name="password"
+                      value={registerForm.password}
+                      onChange={handleRegisterChange}
+                      required
+                      placeholder="Crea una contraseña"
+                      className="form-control-custom"
+                    />
+                  </Form.Group>
+
+                  <Form.Group className="form-group-custom mb-4">
+                    <Form.Label>Confirmar Contraseña</Form.Label>
+                    <Form.Control
+                      type="password"
+                      name="confirmPassword"
+                      value={registerForm.confirmPassword}
+                      onChange={handleRegisterChange}
+                      required
+                      placeholder="Confirma tu contraseña"
+                      className="form-control-custom"
+                    />
+                  </Form.Group>
+
+                  <Button
+                    type="submit"
+                    disabled={loading}
+                    className="btn-auth-primary w-100 mb-3"
+                  >
+                    {loading ? (
+                      <>
+                        <Spinner animation="border" size="sm" className="me-2" />
+                        Registrando...
+                      </>
+                    ) : (
+                      '→ Registrarse'
+                    )}
+                  </Button>
+
+                  <div className="toggle-form-section">
+                    <p className="toggle-text">¿Ya tienes cuenta?</p>
+                    <Button
+                      type="button"
+                      onClick={() => {
+                        setIsLogin(true);
+                        setError('');
+                      }}
+                      className="btn-link-auth"
+                    >
+                      Inicia sesión aquí →
+                    </Button>
+                  </div>
+                </Form>
+              )}
+
+              {/* Footer */}
+              <div className="login-footer">
+                <p>🎫 Reserva tus entradas al cine de manera fácil y rápida</p>
+              </div>
+            </div>
+          </Col>
+        </Row>
+      </Container>
     </div>
   );
 }

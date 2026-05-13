@@ -210,6 +210,10 @@ export default function SeatsPage() {
         setPendingReservation(null);
         setSelectedSeats([]);
         loadSeats();
+        // Redirigir a eventos después de 2 segundos
+        setTimeout(() => {
+          navigate('/');
+        }, 2000);
       } else {
         setReservationError(response.message || 'No se pudo confirmar la reserva.');
       }

@@ -1,10 +1,354 @@
-.login-container {
+.login-page {
   min-height: 100vh;
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--dark-bg) 100%);
+  position: relative;
+  overflow: hidden;
   display: flex;
   align-items: center;
-  justify-content: center;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Background Cinema Elements */
+.login-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  opacity: 0.08;
+}
+
+.cinema-reel-1,
+.cinema-reel-2,
+.cinema-reel-3 {
+  position: absolute;
+  border-radius: 50%;
+  border: 3px solid var(--accent-color);
+  animation: float 6s ease-in-out infinite;
+}
+
+.cinema-reel-1 {
+  width: 200px;
+  height: 200px;
+  top: 10%;
+  right: 10%;
+  animation-duration: 8s;
+}
+
+.cinema-reel-2 {
+  width: 150px;
+  height: 150px;
+  bottom: 20%;
+  left: 5%;
+  animation-duration: 10s;
+}
+
+.cinema-reel-3 {
+  width: 250px;
+  height: 250px;
+  top: 50%;
+  left: 10%;
+  animation-duration: 12s;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(20px);
+  }
+}
+
+.login-container {
+  position: relative;
+  z-index: 1;
+}
+
+.min-vh-100 {
+  min-height: 100vh !important;
+}
+
+/* Login Card */
+.login-card {
+  background: linear-gradient(135deg, rgba(26, 26, 46, 0.95) 0%, rgba(15, 52, 96, 0.95) 100%);
+  border: 2px solid rgba(212, 22, 95, 0.3);
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 40px rgba(212, 22, 95, 0.1);
+  overflow: hidden;
+  padding: 0;
+  backdrop-filter: blur(10px);
+  animation: slideInUp 0.6s ease-out;
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Header Section */
+.login-header {
+  background: linear-gradient(135deg, var(--dark-bg) 0%, rgba(212, 22, 95, 0.1) 100%);
+  padding: 2.5rem 2rem 2rem 2rem;
+  text-align: center;
+  border-bottom: 2px solid rgba(212, 22, 95, 0.3);
+}
+
+.logo-cinema {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.cinema-name {
+  margin: 0;
+  font-size: 1.8rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--accent-color) 0%, var(--secondary-color) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: 0.5px;
+}
+
+.tagline {
+  margin: 0.5rem 0 0 0;
+  color: rgba(245, 245, 245, 0.7);
+  font-size: 0.9rem;
+  font-weight: 300;
+  letter-spacing: 0.5px;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+/* Auth Form */
+.auth-form {
+  padding: 2rem;
+}
+
+.form-title {
+  color: var(--light-text);
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--accent-color);
+}
+
+.form-group-custom {
+  margin-bottom: 1.25rem;
+}
+
+.form-group-custom label {
+  color: var(--accent-color);
+  font-weight: 700;
+  font-size: 0.95rem;
+  margin-bottom: 0.5rem;
+  display: block;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.form-control-custom {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  border: 2px solid rgba(212, 22, 95, 0.3) !important;
+  color: #ffffff !important;
+  padding: 0.75rem 1rem !important;
+  border-radius: 8px !important;
+  font-size: 0.95rem !important;
+  transition: all 0.3s ease !important;
+  font-family: inherit;
+  font-weight: 500;
+}
+
+.form-control-custom::placeholder {
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+
+.form-control-custom:focus {
+  background-color: rgba(255, 255, 255, 0.12) !important;
+  border-color: var(--secondary-color) !important;
+  box-shadow: 0 0 0 3px rgba(212, 22, 95, 0.2) !important;
+  color: var(--light-text) !important;
+}
+
+/* Auth Alerts */
+.auth-alert {
+  background-color: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(212, 22, 95, 0.3) !important;
+  border-radius: 8px !important;
+  color: var(--light-text) !important;
+  margin-bottom: 1.5rem !important;
+  padding: 1rem !important;
+}
+
+.auth-alert.alert-danger {
+  border-color: rgba(255, 107, 107, 0.5) !important;
+  background-color: rgba(255, 107, 107, 0.08) !important;
+}
+
+.auth-alert.alert-success {
+  border-color: rgba(40, 167, 69, 0.5) !important;
+  background-color: rgba(40, 167, 69, 0.08) !important;
+  color: #28a745 !important;
+}
+
+.btn-close {
+  filter: invert(1) brightness(200%);
+}
+
+/* Auth Buttons */
+.btn-auth-primary {
+  background: linear-gradient(135deg, var(--secondary-color) 0%, #b01450 100%) !important;
+  border: none !important;
+  color: white !important;
+  padding: 0.85rem 1.5rem !important;
+  font-size: 1rem !important;
+  font-weight: 700 !important;
+  border-radius: 8px !important;
+  transition: all 0.3s ease !important;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 12px rgba(212, 22, 95, 0.3);
+}
+
+.btn-auth-primary:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(212, 22, 95, 0.5);
+  background: linear-gradient(135deg, #b01450 0%, #900d42 100%) !important;
+}
+
+.btn-auth-primary:active:not(:disabled) {
+  transform: translateY(0px);
+}
+
+.btn-auth-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-auth-secondary {
+  background: linear-gradient(135deg, var(--accent-color) 0%, #ffb700 100%) !important;
+  border: none !important;
+  color: var(--primary-color) !important;
+  padding: 0.85rem 1.5rem !important;
+  font-size: 1rem !important;
+  font-weight: 700 !important;
+  border-radius: 8px !important;
+  transition: all 0.3s ease !important;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 12px rgba(255, 193, 7, 0.3);
+}
+
+.btn-auth-secondary:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(255, 193, 7, 0.5);
+  background: linear-gradient(135deg, #ffb700 0%, #ffa500 100%) !important;
+}
+
+.btn-auth-secondary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Toggle Form Section */
+.toggle-form-section {
+  text-align: center;
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(212, 22, 95, 0.2);
+}
+
+.toggle-text {
+  margin: 0;
+  color: rgba(245, 245, 245, 0.7);
+  font-size: 0.9rem;
+  margin-bottom: 0.75rem;
+}
+
+.btn-link-auth {
+  background: none !important;
+  border: none !important;
+  color: var(--accent-color) !important;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 0.95rem;
+  padding: 0 !important;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.btn-link-auth:hover {
+  color: var(--secondary-color) !important;
+}
+
+/* Login Footer */
+.login-footer {
+  padding: 1rem 2rem;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.2);
+  border-top: 1px solid rgba(212, 22, 95, 0.2);
+}
+
+.login-footer p {
+  margin: 0;
+  color: rgba(245, 245, 245, 0.6);
+  font-size: 0.85rem;
+  font-weight: 300;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .login-card {
+    margin: 1rem;
+    border-radius: 12px;
+  }
+
+  .login-header {
+    padding: 1.5rem 1rem;
+  }
+
+  .logo-cinema {
+    font-size: 2.5rem;
+  }
+
+  .cinema-name {
+    font-size: 1.5rem;
+  }
+
+  .auth-form {
+    padding: 1.5rem;
+  }
+
+  .form-title {
+    font-size: 1.3rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .cinema-reel-1,
+  .cinema-reel-2,
+  .cinema-reel-3 {
+    display: none;
+  }
 }
 
 .login-card {

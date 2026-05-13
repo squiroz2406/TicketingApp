@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import api from "../api/client";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
+import { Container, Row, Col, Button, Badge, Spinner } from "react-bootstrap";
 import "./EventsPage.css";
 
 const POSTER_MAP = {
@@ -178,12 +179,12 @@ export default function EventsPage() {
         if (res.data && res.data.length > 0) {
           setEvents(res.data.map(createEventFromApi));
         } else {
-          setEvents([]);
+          setEvents(MOCK_EVENTS);
         }
       })
       .catch(err => {
         console.warn("No se pudo conectar al API, usando datos de prueba", err);
-        setEvents([]);
+        setEvents(MOCK_EVENTS);
       })
       .finally(() => setLoading(false));
   }, []);
@@ -195,89 +196,138 @@ export default function EventsPage() {
   return (
     <>
       <Navbar />
-      <div className="events-container">
-        {/* Header del Cine */}
-        <div className="cinema-header">
-          <h1>🎬 CinemaTickets</h1>
-          <p>Reserva tus entradas ahora</p>
+      <div className="events-page">
+        {/* Header Hero */}
+        <div className="cinema-hero">
+          <div className="hero-overlay"></div>
+          <div className="hero-content">
+            <h1 className="hero-title">🎬 CineMark Pro</h1>
+            <p className="hero-subtitle">Descubre los mejores estrenos del momento</p>
+          </div>
         </div>
 
-      {/* Filtros */}
-      <div className="filters-section">
-        {CATEGORIES.map(category => (
-          <button
-            key={category}
-            className={`filter-btn ${selectedCategory === category ? 'active' : ''}`}
-            onClick={() => setSelectedCategory(category)}
-          >
-            {category}
-          </button>
-        ))}
-      </div>
-
-      {/* Grid de Películas */}
-      <div className="events-grid">
-        {loading ? (
-          <p className="no-events">Cargando películas...</p>
-        ) : filteredEvents.length === 0 ? (
-          <p className="no-events">No hay películas disponibles para esta categoría</p>
-        ) : (
-          filteredEvents.map(e => (
-            <div key={e.id} className="event-card" onClick={() => navigate(`/events/${e.id}/sectors`)}>
-              {/* Poster */}
-              <div className="movie-poster">
-                {e.poster ? (
-                  <img src={e.poster} alt={e.nombre} className="poster-image" onError={(img) => img.target.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="342" height="513"%3E%3Crect fill="%23667eea" width="342" height="513"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" font-family="Arial" font-size="24" fill="white"%3E🎬%3C/text%3E%3C/svg%3E'} />
-                ) : (
-                  <div className="poster-placeholder">🎭</div>
-                )}
-              </div>
-
-              <div className="movie-info">
-                <h3>{e.nombre}</h3>
-                
-                <div className="movie-details">
-                  <span className="rating">PG-13</span>
-                  <span className="genre">{e.category || 'General'}</span>
-                </div>
-
-                <p className="date-time">
-                  📅 {new Date(e.fecha).toLocaleDateString('es-ES', { 
-                    weekday: 'short', 
-                    year: 'numeric', 
-                    month: 'long', 
-                    day: 'numeric' 
-                  })}
-                </p>
-
-                <p className="showtimes">
-                  ⏰ {e.sectors?.map(sector => sector.name).join(' • ') || 'Horario no disponible'}
-                </p>
-
-                <div className="availability">
-                  <div className="seats-available">
-                    {(() => {
-                      const totalCapacity = e.sectors?.reduce((total, sector) => total + (sector.capacity ?? 0), 0) || 0;
-                      const totalAvailable = e.sectors?.reduce((total, sector) => total + (sector.availableSeats ?? 0), 0) || 0;
-                      const percentageAvailable = totalCapacity > 0 ? Math.round((totalAvailable / totalCapacity) * 100) : 0;
-                      return (
-                        <>
-                          <span className="available-count">{totalAvailable} butacas disponibles</span>
-                          <div className="availability-bar">
-                            <div className="filled" style={{ width: `${percentageAvailable}%` }}></div>
-                          </div>
-                        </>
-                      );
-                    })()}
-                  </div>
-                </div>
-
-                <button className="buy-btn">Comprar Entradas</button>
-              </div>
+        <Container className="py-5">
+          {/* Filtros de Categorías */}
+          <div className="filters-container mb-5">
+            <h5 className="filters-title">Géneros</h5>
+            <div className="filters-grid">
+              {CATEGORIES.map(category => (
+                <Button
+                  key={category}
+                  className={`filter-btn ${selectedCategory === category ? 'active' : ''}`}
+                  onClick={() => setSelectedCategory(category)}
+                  variant={selectedCategory === category ? "danger" : "outline-light"}
+                >
+                  {category}
+                </Button>
+              ))}
             </div>
-          ))
-        )}
-      </div>
+          </div>
+
+          {/* Grid de Películas */}
+          {loading ? (
+            <div className="text-center py-5">
+              <Spinner animation="border" variant="warning" />
+              <p className="mt-3 text-light">Cargando películas...</p>
+            </div>
+          ) : filteredEvents.length === 0 ? (
+            <div className="text-center py-5">
+              <h4 className="text-light">No hay películas disponibles para esta categoría</h4>
+            </div>
+          ) : (
+            <Row className="g-4">
+              {filteredEvents.map(event => (
+                <Col key={event.id} md={6} lg={4} xl={3} className="mb-4">
+                  <div className="movie-card" onClick={() => navigate(`/events/${event.id}/sectors`)}>
+                    {/* Poster */}
+                    <div className="movie-poster-container">
+                      <img 
+                        src={event.poster} 
+                        alt={event.nombre} 
+                        className="movie-poster"
+                        onError={(img) => img.target.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="342" height="513"%3E%3Crect fill="%23667eea" width="342" height="513"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" font-family="Arial" font-size="24" fill="white"%3E🎬%3C/text%3E%3C/svg%3E'} 
+                      />
+                      <div className="poster-overlay">
+                        <Button className="btn-reserve" size="lg">
+                          Reservar Ahora
+                        </Button>
+                      </div>
+                    </div>
+
+                    {/* Información */}
+                    <div className="movie-details">
+                      <h5 className="movie-title">{event.nombre}</h5>
+                      
+                      <div className="badges-container mb-2">
+                        <Badge bg="danger" className="badge-rating">PG-13</Badge>
+                        <Badge bg="warning" text="dark" className="badge-genre">
+                          {event.category}
+                        </Badge>
+                      </div>
+
+                      <div className="movie-meta">
+                        <p className="meta-item">
+                          <span className="meta-icon">📅</span>
+                          <span className="meta-text">
+                            {new Date(event.fecha).toLocaleDateString('es-ES', { 
+                              month: 'short', 
+                              day: 'numeric'
+                            })}
+                          </span>
+                        </p>
+                        <p className="meta-item">
+                          <span className="meta-icon">🕒</span>
+                          <span className="meta-text">
+                            {new Date(event.fecha).toLocaleTimeString('es-ES', { 
+                              hour: '2-digit', 
+                              minute: '2-digit'
+                            })}
+                          </span>
+                        </p>
+                      </div>
+
+                      {/* Barra de disponibilidad */}
+                      <div className="availability-section">
+                        <div className="availability-header">
+                          <small>Disponibilidad</small>
+                          {(() => {
+                            const totalCapacity = event.sectors?.reduce((total, sector) => total + (sector.capacity ?? 0), 0) || 0;
+                            const totalAvailable = event.sectors?.reduce((total, sector) => total + (sector.availableSeats ?? sector.capacity ?? 0), 0) || 0;
+                            return (
+                              <small className="availability-count">
+                                {totalAvailable}/{totalCapacity}
+                              </small>
+                            );
+                          })()}
+                        </div>
+                        <div className="availability-bar">
+                          {(() => {
+                            const totalCapacity = event.sectors?.reduce((total, sector) => total + (sector.capacity ?? 0), 0) || 0;
+                            const totalAvailable = event.sectors?.reduce((total, sector) => total + (sector.availableSeats ?? sector.capacity ?? 0), 0) || 0;
+                            const percentage = totalCapacity > 0 ? Math.round((totalAvailable / totalCapacity) * 100) : 100;
+                            return (
+                              <div className="bar-fill" style={{ width: `${percentage}%` }}></div>
+                            );
+                          })()}
+                        </div>
+                      </div>
+
+                      {/* Horarios disponibles */}
+                      <div className="showtimes-section mt-3">
+                        <small className="showtimes-label">Horarios:</small>
+                        <div className="showtimes-list">
+                          {event.sectors?.slice(0, 2).map((sector, idx) => (
+                            <span key={idx} className="showtime-badge">${sector.price}</span>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </Col>
+              ))}
+            </Row>
+          )}
+        </Container>
       </div>
     </>
   );
