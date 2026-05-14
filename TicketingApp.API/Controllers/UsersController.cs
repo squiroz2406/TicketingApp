@@ -46,25 +46,5 @@ namespace TicketingApp.API.Controllers
 
             return Ok(result);
         }
-
-        [HttpPost("create-test-user")]
-        public async Task<IActionResult> CreateTestUser()
-        {
-            var user = new ApplicationUser
-            {
-                UserName = "testuser",
-                Email = "test@example.com",
-                EmailConfirmed = true
-            };
-
-            var result = await _userManager.CreateAsync(user, "Password123!");
-            
-            if (!result.Succeeded)
-            {
-                return BadRequest(result.Errors);
-            }
-
-            return Ok(new { userId = user.Id, userName = user.UserName });
-        }
     }
 }

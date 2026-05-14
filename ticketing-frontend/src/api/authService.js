@@ -50,15 +50,6 @@ export const authService = {
     return user?.id ?? 0;
   },
 
-  createTestUser: async () => {
-    try {
-      const response = await axios.post(`${API_BASE_URL}/users/create-test-user`);
-      return response.data;
-    } catch (error) {
-      throw error.response?.data || { success: false, message: 'Error al crear usuario de prueba' };
-    }
-  },
-
   isAuthenticated: () => !!localStorage.getItem('token'),
 };
 

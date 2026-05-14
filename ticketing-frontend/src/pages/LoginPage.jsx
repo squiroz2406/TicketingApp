@@ -7,8 +7,6 @@ import './LoginPage.css';
 function LoginPage() {
   const [isLogin, setIsLogin] = useState(true);
   const [loading, setLoading] = useState(false);
-  const [creatingTestUser, setCreatingTestUser] = useState(false);
-  const [testUserMessage, setTestUserMessage] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
@@ -88,24 +86,6 @@ function LoginPage() {
     }
   };
 
-  const handleCreateTestUser = async () => {
-    setError('');
-    setTestUserMessage('');
-    setCreatingTestUser(true);
-
-    try {
-      const result = await authService.createTestUser();
-      if (result.success === false) {
-        setError(result.message || 'No se pudo crear el usuario de prueba');
-      } else {
-        setTestUserMessage(`Usuario de prueba creado: ${result.userName} (${result.userId}). Ingresa con test@example.com / Password123!`);
-      }
-    } catch (err) {
-      setError(err.message || 'Error al crear usuario de prueba');
-    } finally {
-      setCreatingTestUser(false);
-    }
-  };
 
   return (
     <div className="login-page">
@@ -133,11 +113,6 @@ function LoginPage() {
                 </Alert>
               )}
 
-              {testUserMessage && (
-                <Alert variant="success" className="auth-alert">
-                  <i className="bi bi-check-circle"></i> {testUserMessage}
-                </Alert>
-              )}
 
               {isLogin ? (
                 <Form onSubmit={handleLoginSubmit} className="auth-form">
@@ -184,21 +159,6 @@ function LoginPage() {
                     )}
                   </Button>
 
-                  <Button
-                    type="button"
-                    className="btn-auth-secondary w-100 mb-3"
-                    onClick={handleCreateTestUser}
-                    disabled={creatingTestUser}
-                  >
-                    {creatingTestUser ? (
-                      <>
-                        <Spinner animation="border" size="sm" className="me-2" />
-                        Creando usuario...
-                      </>
-                    ) : (
-                      '✓ Crear usuario de prueba'
-                    )}
-                  </Button>
 
                   <div className="toggle-form-section">
                     <p className="toggle-text">¿No tienes cuenta?</p>

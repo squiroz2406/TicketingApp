@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TicketingApp.Domain")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+54d5583680feaadd9193be9426bca3c828890ad4")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+93c2fa7c905a7db8399e6eabbb185f1a01fe1192")]
 [assembly: System.Reflection.AssemblyProductAttribute("TicketingApp.Domain")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TicketingApp.Domain")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
