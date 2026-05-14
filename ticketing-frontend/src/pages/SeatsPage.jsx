@@ -185,11 +185,16 @@ export default function SeatsPage() {
       }
     } catch (err) {
       if (err.response?.status === 409) {
-        setReservationError('Conflicto: Algunas butacas ya estaban reservadas. Intenta de nuevo.');
+        setReservationError('❌ Error de concurrencia: Otro usuario reservó una o más butacas que intentabas reservar. Se ha actualizado el grid de butacas.');
+        setSelectedSeats([]);
+        // Recargar las butacas con un pequeño delay para asegurar que se actualicen
+        setTimeout(() => {
+          loadSeats();
+        }, 300);
       } else {
         setReservationError(err.response?.data?.message || 'Error al reservar las butacas.');
+        loadSeats();
       }
-      loadSeats();
     } finally {
       setIsReserving(false);
     }
