@@ -25,7 +25,7 @@ public class ReservationsController : ControllerBase
             return Ok(new { success = true, reservationId = result.ReservationId });
         }
 
-        return Conflict(new { success = false, message = "Algunas butacas ya estaban reservadas o no existen" });
+        return Conflict(new { success = false, message = result.Message ?? "Algunas butacas ya estaban reservadas o no existen" });
     }
 
     [HttpPost("{id:guid}/confirm")]

@@ -35,6 +35,8 @@ const generateMockSeats = (eventId) => {
 };
 
 export default function SeatsPage() {
+  const MAX_SEATS_PER_RESERVATION = 6;
+  
   const { sectorId } = useParams();
   const [searchParams] = useSearchParams();
   const movieName = searchParams.get('movie') || 'Película';
@@ -329,11 +331,20 @@ export default function SeatsPage() {
                         className={`seat ${seat.status} ${isSelected ? 'selected' : ''}`}
                         onClick={() => {
                           if (seat.status === 'available') {
-                            setSelectedSeats(prev =>
-                              prev.some(item => item.id === seat.id)
-                                ? prev.filter(item => item.id !== seat.id)
-                                : [...prev, { id: seat.id, label: seat.seatNumber }]
-                            );
+                            setSelectedSeats(prev => {
+                              // Si el asiento ya está seleccionado, quitarlo
+                              if (prev.some(item => item.id === seat.id)) {
+                                return prev.filter(item => item.id !== seat.id);
+                              }
+                              // Si no está seleccionado y se alcanzó el máximo, mostrar error
+                              if (prev.length >= MAX_SEATS_PER_RESERVATION) {
+                                setReservationError(`❌ No puedes reservar más de ${MAX_SEATS_PER_RESERVATION} butacas por compra`);
+                                return prev;
+                              }
+                              // Agregar el asiento a la selección
+                              setReservationError('');
+                              return [...prev, { id: seat.id, label: seat.seatNumber }];
+                            });
                           } else if (seat.status === 'occupied') {
                             // Mostrar que el asiento ahora está ocupado
                             alert(`❌ Este asiento (${seat.seatNumber}) ya fue reservado`);
@@ -361,11 +372,20 @@ export default function SeatsPage() {
                         className={`seat ${seat.status} ${isSelected ? 'selected' : ''}`}
                         onClick={() => {
                           if (seat.status === 'available') {
-                            setSelectedSeats(prev =>
-                              prev.some(item => item.id === seat.id)
-                                ? prev.filter(item => item.id !== seat.id)
-                                : [...prev, { id: seat.id, label: seat.seatNumber }]
-                            );
+                            setSelectedSeats(prev => {
+                              // Si el asiento ya está seleccionado, quitarlo
+                              if (prev.some(item => item.id === seat.id)) {
+                                return prev.filter(item => item.id !== seat.id);
+                              }
+                              // Si no está seleccionado y se alcanzó el máximo, mostrar error
+                              if (prev.length >= MAX_SEATS_PER_RESERVATION) {
+                                setReservationError(`❌ No puedes reservar más de ${MAX_SEATS_PER_RESERVATION} butacas por compra`);
+                                return prev;
+                              }
+                              // Agregar el asiento a la selección
+                              setReservationError('');
+                              return [...prev, { id: seat.id, label: seat.seatNumber }];
+                            });
                           } else if (seat.status === 'occupied') {
                             alert(`❌ Este asiento (${seat.seatNumber}) ya fue reservado`);
                           }
@@ -390,7 +410,7 @@ export default function SeatsPage() {
       <div className="booking-summary">
         <div className="summary-content">
           <div className="seats-info">
-            <p>Butacas seleccionadas: <strong>{selectedSeats.length}</strong></p>
+            <p>Butacas seleccionadas: <strong>{selectedSeats.length}/{MAX_SEATS_PER_RESERVATION}</strong></p>
             <p>Butacas: <strong>{selectedSeats.map(seat => seat.label).join(', ') || 'Ninguna'}</strong></p>
             <p>Total a pagar: <strong>${totalPrice.toFixed(2)}</strong></p>
             {pendingReservation && (

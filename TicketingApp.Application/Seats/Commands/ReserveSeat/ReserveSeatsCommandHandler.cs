@@ -13,6 +13,7 @@ namespace TicketingApp.Application.Seats.Commands.ReserveSeat;
 
 public class ReserveSeatsCommandHandler : IRequestHandler<ReserveSeatsCommand, ReserveSeatsResult>
 {
+    private const int MAX_SEATS_PER_RESERVATION = 6;
     private readonly ISeatRepository _seatRepository;
     private readonly IReservationRepository _reservationRepository;
     private readonly IAuditLogRepository _auditLogRepository;
@@ -35,7 +36,17 @@ public class ReserveSeatsCommandHandler : IRequestHandler<ReserveSeatsCommand, R
         var seatIds = request.SeatIds?.Distinct().ToList() ?? new List<Guid>();
         if (!seatIds.Any())
         {
-            return new ReserveSeatsResult { Success = false };
+            return new ReserveSeatsResult { Success = false, Message = "No seats provided" };
+        }
+
+        // Validar que no se excedan las 6 butacas máximas por compra
+        if (seatIds.Count > MAX_SEATS_PER_RESERVATION)
+        {
+            return new ReserveSeatsResult 
+            { 
+                Success = false, 
+                Message = $"No puedes reservar más de {MAX_SEATS_PER_RESERVATION} butacas por compra" 
+            };
         }
 
         var seats = new List<Seat>();
@@ -44,7 +55,7 @@ public class ReserveSeatsCommandHandler : IRequestHandler<ReserveSeatsCommand, R
             var seat = await _seatRepository.GetByIdAsync(seatId);
             if (seat == null)
             {
-                return new ReserveSeatsResult { Success = false };
+                return new ReserveSeatsResult { Success = false, Message = "One or more seats not found" };
             }
 
             if (seat.Status == SeatStatus.Reserved)
@@ -81,7 +92,7 @@ public class ReserveSeatsCommandHandler : IRequestHandler<ReserveSeatsCommand, R
 
             if (seat.Status != SeatStatus.Available)
             {
-                return new ReserveSeatsResult { Success = false };
+                return new ReserveSeatsResult { Success = false, Message = "One or more seats are not available" };
             }
 
             seats.Add(seat);
@@ -127,7 +138,7 @@ public class ReserveSeatsCommandHandler : IRequestHandler<ReserveSeatsCommand, R
         }
         catch (DbUpdateConcurrencyException)
         {
-            return new ReserveSeatsResult { Success = false };
+            return new ReserveSeatsResult { Success = false, Message = "Concurrency error. Please try again" };
         }
     }
 }

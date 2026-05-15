@@ -8,4 +8,5 @@ public class ReserveSeatsResult
     public bool Success { get; set; }
     public Guid ReservationId { get; set; }
     public IEnumerable<Guid> ReservationIds { get; set; } = Array.Empty<Guid>();
+    public string? Message { get; set; }
 }
