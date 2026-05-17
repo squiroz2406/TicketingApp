@@ -10,6 +10,15 @@ namespace TicketingApp.Infrastructure.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.Sql(@"
+                IF EXISTS (
+                    SELECT 1
+                    FROM sys.indexes
+                    WHERE name = 'IX_Reservation_SeatId_Status'
+                )
+                DROP INDEX IX_Reservation_SeatId_Status ON Reservation;
+            ");
+
             migrationBuilder.AlterColumn<string>(
                 name: "Status",
                 table: "Reservation",

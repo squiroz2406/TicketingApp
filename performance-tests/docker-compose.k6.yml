@@ -1,0 +1,49 @@
+services:
+  k6:
+    image: grafana/k6:0.49.0
+    container_name: ticketingapp-k6
+    user: "${K6_UID:-1000}:${K6_GID:-1000}"
+    profiles: ["tools"]
+    environment:
+      BASE_URL: ${BASE_URL:-http://ticketingapp:8080}
+      RESET_DATA: ${RESET_DATA:-true}
+      SAME_SEAT_VUS: ${SAME_SEAT_VUS:-1000}
+      K6_PROMETHEUS_RW_SERVER_URL: ${K6_PROMETHEUS_RW_SERVER_URL:-http://prometheus:9090/api/v1/write}
+      K6_PROMETHEUS_RW_TREND_AS_NATIVE_HISTOGRAM: "true"
+    volumes:
+      - .:/workspace
+    working_dir: /workspace
+    command: ["run", "performance-tests/scenarios/same-seat-reservation.js"]
+    depends_on:
+      ticketingapp:
+        condition: service_started
+    networks:
+      - default
+
+  prometheus:
+    image: prom/prometheus:v2.52.0
+    container_name: ticketingapp-prometheus
+    profiles: ["observability"]
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--web.enable-remote-write-receiver"
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+
+  grafana:
+    image: grafana/grafana:10.4.2
+    container_name: ticketingapp-grafana
+    profiles: ["observability"]
+    ports:
+      - "3001:3000"
+    environment:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: admin
+      GF_USERS_DEFAULT_THEME: light
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./grafana/dashboards:/var/lib/grafana/dashboards:ro
+    depends_on:
+      - prometheus

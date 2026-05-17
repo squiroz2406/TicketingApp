@@ -1,0 +1,57 @@
+{
+  "annotations": { "list": [] },
+  "editable": true,
+  "panels": [
+    {
+      "type": "timeseries",
+      "title": "HTTP request duration p95",
+      "targets": [
+        {
+          "expr": "histogram_quantile(0.95, sum(rate(k6_http_req_duration_seconds_bucket[1m])) by (le))",
+          "legendFormat": "p95"
+        }
+      ],
+      "gridPos": { "x": 0, "y": 0, "w": 12, "h": 8 }
+    },
+    {
+      "type": "stat",
+      "title": "Reservation successes",
+      "targets": [
+        {
+          "expr": "sum(increase(k6_reservation_successes_total[5m]))",
+          "legendFormat": "successes"
+        }
+      ],
+      "gridPos": { "x": 12, "y": 0, "w": 6, "h": 4 }
+    },
+    {
+      "type": "stat",
+      "title": "Reservation conflicts",
+      "targets": [
+        {
+          "expr": "sum(increase(k6_reservation_conflicts_total[5m]))",
+          "legendFormat": "conflicts"
+        }
+      ],
+      "gridPos": { "x": 18, "y": 0, "w": 6, "h": 4 }
+    },
+    {
+      "type": "timeseries",
+      "title": "Unexpected status rate",
+      "targets": [
+        {
+          "expr": "avg(k6_unexpected_status_rate)",
+          "legendFormat": "unexpected"
+        }
+      ],
+      "gridPos": { "x": 12, "y": 4, "w": 12, "h": 4 }
+    }
+  ],
+  "refresh": "5s",
+  "schemaVersion": 39,
+  "tags": ["k6", "ticketing"],
+  "templating": { "list": [] },
+  "time": { "from": "now-15m", "to": "now" },
+  "title": "TicketingApp k6",
+  "version": 1
+}

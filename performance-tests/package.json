@@ -1,0 +1,16 @@
+{
+  "name": "ticketingapp-performance-tests",
+  "version": "1.0.0",
+  "private": true,
+  "description": "k6 load and concurrency tests for TicketingApp reservation integrity.",
+  "scripts": {
+    "same-seat": "k6 run scenarios/same-seat-reservation.js",
+    "massive": "k6 run scenarios/massive-purchase.js",
+    "spike": "k6 run scenarios/spike-test.js",
+    "stress": "k6 run scenarios/stress-test.js",
+    "soak": "k6 run scenarios/soak-test.js",
+    "docker:same-seat": "docker compose -f ../docker-compose.yml -f docker-compose.k6.yml --profile tools run --rm k6 run performance-tests/scenarios/same-seat-reservation.js",
+    "docker:observability": "docker compose -f ../docker-compose.yml -f docker-compose.k6.yml --profile observability up -d prometheus grafana"
+  },
+  "devDependencies": {}
+}

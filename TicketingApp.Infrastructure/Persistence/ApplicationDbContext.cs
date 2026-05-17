@@ -132,6 +132,12 @@ public class ApplicationDbContext
             .Property(r => r.ExpiresAt)
             .HasColumnName("ExpiresAt");
 
+        modelBuilder.Entity<Reservation>()
+            .HasIndex(r => r.SeatId)
+            .IsUnique()
+            .HasDatabaseName("UX_Reservation_SeatId_Active")
+            .HasFilter("[Status] IN ('Pending', 'Confirmed')");
+
         // AuditLog configuration
         modelBuilder.Entity<AuditLog>()
             .HasOne<ApplicationUser>()

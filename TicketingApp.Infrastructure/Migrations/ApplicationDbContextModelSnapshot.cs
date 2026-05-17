@@ -258,7 +258,10 @@ namespace TicketingApp.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SeatId");
+                    b.HasIndex("SeatId")
+                        .IsUnique()
+                        .HasDatabaseName("UX_Reservation_SeatId_Active")
+                        .HasFilter("[Status] IN ('Pending', 'Confirmed')");
 
                     b.HasIndex("UserId");
 

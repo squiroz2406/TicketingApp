@@ -86,6 +86,13 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+if (app.Configuration.GetValue<bool>("Database:AutoMigrate"))
+{
+    using var scope = app.Services.CreateScope();
+    var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    await context.Database.MigrateAsync();
+}
+
 app.UseSwagger();
 app.UseSwaggerUI();
 

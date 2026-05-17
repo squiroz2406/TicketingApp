@@ -140,5 +140,9 @@ public class ReserveSeatsCommandHandler : IRequestHandler<ReserveSeatsCommand, R
         {
             return new ReserveSeatsResult { Success = false, Message = "Concurrency error. Please try again" };
         }
+        catch (DbUpdateException)
+        {
+            return new ReserveSeatsResult { Success = false, Message = "One or more seats are not available" };
+        }
     }
 }
