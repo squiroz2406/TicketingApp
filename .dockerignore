@@ -2,4 +2,6 @@ bin/
 obj/
 node_modules/
 .git
-
+**/bin/
+**/obj/
+.vs/
